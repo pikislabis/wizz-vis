@@ -13,9 +13,17 @@ export default class ImageLink extends React.Component {
     }
   }
 
+  get linkURL() {
+    if (this.props.linkURL == 'back') {
+      return 'javascript:history.back();';
+    } else {
+      return this.props.linkURL;
+    }
+  }
+
   render () {
     return (
-      <a href={this.props.linkURL}
+      <a href={this.linkURL}
          target={ this.linkType }>
         <img
           style={this.props.style}

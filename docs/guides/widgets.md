@@ -700,7 +700,7 @@ Also, the attributes that can be configured using `options` field are:
 
 To keep the proportions of the used image, we have to use `keep_ratio` property.
 
-A link could be associated to the image. When clicking, it will open the `url`, that could be an external resource (`"type": "absolute"`) or a dashboard link (`"type": "dashboard"`).
+A link could be associated to the image. When clicking, it will open the `url`, that could be an external resource (`"type": "absolute"`) or a dashboard link (`"type": "dashboard"`). You can redirect to the previous page by setting the property `url` to `back` (`"url": "back"`).
 
 ### WidgetHistogram
 
