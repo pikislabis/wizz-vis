@@ -368,10 +368,11 @@ If the `aggregators` option is not included, all aggregators used in the table w
 * granularity (`all`)
 * limit
 
-Also, we can set the size, color and behavior of each point through the `options` attribute.
+Also, we can set the visibility of the legend, or the size, color and behavior of each point through the `options` attribute.
 
 ```json
 "options": {
+  "legend": true | false, (default: true)
   "max_zoom": 15, (default: 1)
   "max_value": "max" | "average" | Number, (default: "max")
   "blur": 5, (default: 10)
@@ -445,9 +446,6 @@ The `options` attribute would be as follows:
 
 ```json
 {
-  "max_value": "max" | "average" | Number, (default: "max")
-  "opacity": 0.5, (default: 1)
-  "radius": 15, (default: 40)
   "image": "https://www.bookingtaxibarcelona.com/wp-content/uploads/2015/03/fira-gran-via-map.png",
   "keep_ratio": true,
   "gps_markers": [
@@ -494,17 +492,23 @@ x-y points are references for a image point starting at top-left corner of the i
 
 To keep the proportions of the used image, we have to use `keep_ratio` property.
 
+We can show or hide the legend through the `legend` property by setting it to true or false (default to true).
+
 The `options` attribute would be as follows:
 
 ```json
 {
+  "max_value": "max" | "average" | Number, (default: "max")
+  "opacity": 0.5, (default: 1)
+  "radius": 15, (default: 40)
   "image": "https://www.bookingtaxibarcelona.com/wp-content/uploads/2015/03/fira-gran-via-map.png",
   "keep_ratio": true,
   "gps_markers": [
     { "x": 261, "y": 208, "latitude": 41.355151, "longitude": 2.127733 },
     { "x": 530, "y": 217, "latitude": 41.357172, "longitude": 2.130533 },
     { "x": 785, "y": 406, "latitude": 41.3559, "longitude": 2.138092 }
-  ]
+  ],
+  "legend": false
 }
 ```
 
