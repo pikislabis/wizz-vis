@@ -26,6 +26,12 @@ module Docs
       property :end_time do
         key :type, :string
       end
+      property :filters do
+        key :type, :array
+        items do
+          key :'$ref', :Filter
+        end
+      end
       property :widgets do
         key :type, :array
         items do

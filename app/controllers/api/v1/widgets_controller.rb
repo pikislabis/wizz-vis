@@ -4,7 +4,7 @@ module Api
       include Swagger::Blocks
 
       before_action :set_dashboard, only: :index
-      before_action :set_widget, only: %i[show data update destroy]
+      before_action :set_widget, only: %i[show data query update destroy]
 
       swagger_path '/dashboards/{dashboard_id}/widgets' do
         operation :get do
@@ -117,7 +117,55 @@ module Api
       end
 
       def data
+        @widget.range ||= @widget.dashboard.range
+        @widget.start_time ||= @widget.dashboard.start_time
+        @widget.end_time ||= @widget.dashboard.end_time
+
+        @widget.range = 'last_1_hour' unless @widget.interval.any?
+
         render json: @widget.data
+      end
+
+      swagger_path '/widgets/{id}/query' do
+        operation :get do
+          key :summary, "Obtain a widget's query"
+          key :produces, [
+            'application/json'
+          ]
+          key :tags, [
+            'widgets'
+          ]
+          parameter do
+            key :name, :id
+            key :in, :path
+            key :description, 'ID of the widget to obtain its query'
+            key :required, true
+            key :type, :integer
+            key :format, :int64
+          end
+          response 200 do
+            key :description, 'Query'
+            schema do
+              key :type, :object
+            end
+          end
+          response :default do
+            key :description, 'unexpected error'
+            schema do
+              key :'$ref', :ApiError
+            end
+          end
+        end
+      end
+
+      def query
+        @widget.range ||= @widget.dashboard.range
+        @widget.start_time ||= @widget.dashboard.start_time
+        @widget.end_time ||= @widget.dashboard.end_time
+
+        @widget.range = 'last_1_hour' unless @widget.interval.any?
+
+        render json: @widget.query.as_json
       end
 
       swagger_path '/widgets/{id}' do

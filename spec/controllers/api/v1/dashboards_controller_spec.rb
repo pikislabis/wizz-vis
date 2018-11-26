@@ -11,6 +11,13 @@ RSpec.describe Api::V1::DashboardsController, type: :controller do
       theme: 'light',
       interval: 30,
       locked: false,
+      filters: [
+        {
+          dimension_name: datasource.dimensions.map(&:name).sample,
+          operator: 'eq',
+          value: 'foo'
+        }
+      ],
       widgets: [
         type: widget.type,
         datasource_name: datasource.name,

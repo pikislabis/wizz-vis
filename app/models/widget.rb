@@ -48,8 +48,22 @@ class Widget < ApplicationRecord
     %w[range start_time end_time].any? { |k| attributes[k] }
   end
 
+  #
+  # Include filters inherited from global dimension filters.
+  #
+  def filters
+    (options['filters'] || []).each do |f|
+      association(:filters).add_to_target(f)
+    end
+    super
+  end
+
   def data(override_filters = nil, override_options = {})
-    query = Datastore::Query.new(
+    query(override_filters, override_options).run
+  end
+
+  def query(override_filters = nil, override_options = {})
+    Datastore::Query.new(
       datasource: datasource.name,
       properties: attributes.merge(intervals: intervals).merge(override_options),
       dimensions: dimensions,
@@ -58,8 +72,6 @@ class Widget < ApplicationRecord
       filters: override_filters || filters,
       options: options
     )
-
-    query.run
   end
 
   private

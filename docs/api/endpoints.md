@@ -516,7 +516,7 @@ GET /widgets/{id}/data
 
 | Attribute     | Description |
 | ------------- |-------------|
-| `dashboard_id` *Required* | The unique identifier associated with the dashboard |
+| `id` *Required* | The unique identifier associated with the widget |
 
 ##### Response
 ```
@@ -524,6 +524,51 @@ HTTP 200 OK
 ```
 
 The response body will depend on the widget's type requested.
+
+#### Get a widget's query
+
+##### Endpoint
+```
+GET /widgets/{id}/query
+```
+
+| Attribute     | Description |
+| ------------- |-------------|
+| `id` *Required* | The unique identifier associated with the widget |
+
+##### Response
+```
+HTTP 200 OK
+```
+
+```json
+{
+  "context": {
+    "queryId": "411bff75-ed91-438c-94d3-2510ae930242",
+    "timeout": 30000
+  },
+  "queryType": "topN",
+  "intervals": ["2018-10-18T15:00:00Z/2018-10-18T16:00:00Z"],
+  "granularity": "all",
+  "aggregations": [{
+    "type": "doubleSum",
+    "name": "health",
+    "fieldName": "health"
+  }],
+  "dimension": "name",
+  "metric": "health",
+  "threshold": 10,
+  "dataSource": "198c0ca7-2d79-4d68-adc2-a1701ab7eaef_topic_1",
+  "filter": {
+    "type": "not",
+    "field": {
+      "dimension": "name",
+      "type": "selector",
+      "value": null
+    }
+  }
+}
+```
 
 #### Create Widget
 
@@ -705,6 +750,7 @@ HTTP 200 OK
     "range": "last_1_hour",
     "start_time": null,
     "end_time": null,
+    "filters": [],
     "widgets": [
       {
         "id": 1,
@@ -794,6 +840,7 @@ HTTP 200 OK
     "range": "last_1_hour",
     "start_time": null,
     "end_time": null,
+    "filters": [],
     "widgets": [
       {
         "id": 6,
@@ -855,6 +902,7 @@ HTTP 200 OK
   "range": "last_1_hour",
   "start_time": null,
   "end_time": null,
+  "filters": [],
   "widgets": [
     {
       "id": 6,
@@ -907,6 +955,7 @@ POST /dashboards
 | `range` *Optional* | Attribute used to set the time interval to represent. Visit [range]({{ '/guides/widgets#range' | relative_url }}) to check the possible values. |
 | `start_time` *Optional* | Used to include a fixed interval. If range is setted, these attributes are ignored. |
 | `end_time` *Optional* | Used to include a fixed interval. If range is setted, these attributes are ignored. |
+| `filters` *Optional* | Array of filters. |
 | `widgets` *Optional* | Array of widgets. |
 
 ##### Response
@@ -924,6 +973,7 @@ HTTP 200 OK
   "range": "last_1_hour",
   "start_time": null,
   "end_time": null,
+  "filters": [],
   "widgets": [
     {
       "id": 6,
@@ -996,6 +1046,7 @@ HTTP 200 OK
   "range": "last_1_hour",
   "start_time": null,
   "end_time": null,
+  "filters": [],
   "widgets": [
     {
       "id": 6,

@@ -10,5 +10,6 @@ class Api::V1::DashboardSerializer < ActiveModel::Serializer
     :end_time
   )
 
+  has_many :filters
   has_many :widgets
 end

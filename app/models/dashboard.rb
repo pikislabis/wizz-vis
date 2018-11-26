@@ -1,5 +1,6 @@
 class Dashboard < ApplicationRecord
   include Defaults
+  include Api::DashboardApi
 
   # ==========================================================
   # Default values
@@ -10,8 +11,10 @@ class Dashboard < ApplicationRecord
   # Relations
   # ==========================================================
   has_many :widgets, dependent: :destroy
+  has_many :filters, as: :filterable, dependent: :destroy
 
   accepts_nested_attributes_for :widgets
+  accepts_nested_attributes_for :filters
 
   # ==========================================================
   # Validations

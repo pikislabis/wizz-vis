@@ -95,6 +95,7 @@ module Api
               range: 'last_1_hour',
               start_time: '',
               end_time: '',
+              filters: [],
               widgets: [
                 {
                   type: 'WidgetValue',
@@ -261,7 +262,7 @@ module Api
         params[:widgets_attributes] = params.delete(:widgets)
         params.permit(
           :name, :theme, :interval, :locked, :widgets_attributes,
-          :range, :start_time, :end_time
+          :range, :start_time, :end_time, filters: %i[dimension_name operator value]
         ).tap do |dashboard|
           dashboard[:widgets_attributes] = (params[:widgets_attributes] || []).map do |w|
             w.permit(

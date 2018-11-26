@@ -1,5 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Dashboard, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'associations' do
+    it { is_expected.to have_many(:widgets) }
+    it { is_expected.to have_many(:filters) }
+  end
 end
