@@ -16,7 +16,7 @@ $ docker pull wizzieio/wizz-vis:latest
 ## Requirements
 Before run the Wizz-Vis container, there are some requirements necessary to deploy a Wizz-Vis instance:
 
-* PostgreSQL 9.x
+* PostgreSQL 9.4+
 * Redis 3.2+
 * Druid 0.12.1+
 
