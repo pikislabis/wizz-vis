@@ -49,6 +49,27 @@ class Widget < ApplicationRecord
     %w[range start_time end_time].any? { |k| attributes[k] }
   end
 
+  def granularity
+    return super if super || interval.none?
+
+    interval_hours = (interval[1] - interval[0]) / 1.hour
+
+    case interval_hours
+    when 0..1 # Less than one hour
+      'PT1M'
+    when 1..6 # From one to six hours
+      'PT5M'
+    when 6..168 # From 6 hours to one week
+      'PT1H'
+    when 168..2160 # From one week to three months
+      'P1D'
+    when 2160..8760 # From three months to one year
+      'P1W'
+    else # More than one year
+      'P1M'
+    end
+  end
+  
   #
   # Include filters inherited from global dimension filters.
   #
@@ -66,7 +87,10 @@ class Widget < ApplicationRecord
   def query(override_filters = nil, override_options = {})
     Datastore::Query.new(
       datasource: datasource.name,
-      properties: attributes.merge(intervals: intervals).merge(override_options),
+      properties: attributes.merge(
+        intervals: intervals,
+        granularity: granularity
+      ).merge(override_options),
       dimensions: dimensions,
       aggregators: aggregator_widgets.includes(:aggregator, :filters),
       post_aggregators: post_aggregators,
