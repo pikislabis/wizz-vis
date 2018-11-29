@@ -1,4 +1,14 @@
 class WidgetTable < Widget
+  # ==========================================================
+  # Default values
+  # ==========================================================
+  default :granularity, 'all'
+
+  # ==========================================================
+  # Validations
+  # ==========================================================
+  validates :granularity, inclusion: { in: %w(all) }, allow_blank: false
+
   def data
     result = { data: super(nil, granularity: 'all', intervals: [interval]) }
     return result unless compare?

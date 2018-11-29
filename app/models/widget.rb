@@ -3,6 +3,7 @@ require 'druid'
 class Widget < ApplicationRecord
   include Intervalable
   include Api::WidgetApi
+  include Defaults
 
   # ==========================================================
   # Relations
