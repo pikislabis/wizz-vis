@@ -134,6 +134,17 @@ Also, granularity can be represented with period:
 * PT1H
 * P1D
 
+Widgets which must have the granularity set to `all`, do not need to indicate the granularity at the time of creation.
+
+If a widget with granularity other than `all` has no granularity setted, it will be assigned one related to the selected time interval. Otherwise, it will use its own granularity.
+
+* PT1M: Less than or equal to one hour
+* PT5M: From one to six hours
+* PT1H: From six hours to one week
+* P1D: From one week to three months
+* P1W: From three months to one year
+* P1M: More than one year
+
 You have more information in Druid docs: [Aggregation Granularity](http://druid.io/docs/latest/querying/granularities.html).
 
 ### limit
@@ -243,7 +254,6 @@ It will represent a TopN query. In addition to the required attributes, we have 
 
 * dimensions (one)
 * aggregators (one)
-* granularity (set to `all`)
 * limit
 
 If more than one aggregator is set, only one will be represented (or a post aggregation that use these aggregators if necessary).
@@ -365,7 +375,6 @@ If the `aggregators` option is not included, all aggregators used in the table w
 
 * dimensions (one, representing coordinates)
 * aggregators (one)
-* granularity (`all`)
 * limit
 
 Also, we can set the visibility of the legend, or the size, color and behavior of each point through the `options` attribute.
@@ -483,7 +492,6 @@ Similar to WidgetHeatmap, but representing the data over an image instead of a m
 
 * dimensions (one, representing coordinates)
 * aggregators (one)
-* granularity (`all`)
 * limit
 
 It needs GPS markers to convert the latitude-longitude data to x-y points. Al least, three gps markers have to be configured.
@@ -522,7 +530,6 @@ It will represent a GroupBy query. In addition to the required attributes, we ha
 
 * dimensions (two or more)
 * aggregators (one)
-* granularity (all)
 * limit
 
 The order of the dimensions is a bit random. So the order could be set in the options attribute:
@@ -545,7 +552,6 @@ It will represent a GroupBy query. In addition to the required attributes, we ha
 
 * dimensions (two: origin and destination)
 * aggregators (one)
-* granularity (all)
 * limit
 
 The order of the dimensions is a bit random. So the origin and the destination to calculate the matrix values can be set in the options attribute. Also, we can set the legend option:
@@ -718,7 +724,6 @@ It will have two ways of representation:
 In addition to the required attributes, we have to set:
 
 * aggregators (one)
-* granularity (all)
 * limit
 
 We can set the optional discard values option by specifying a value between `previous` or `next`:
