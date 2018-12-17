@@ -25,9 +25,11 @@ $(document).ready(function(){
   var fsSection = document.getElementById('fsSection');
   var fsBtn = document.getElementById('fsBtn');
 
-  fsBtn.onclick = function() {
-    launchFullscreen(fsSection);
-  };
+  if (fsBtn !== null) {
+    fsBtn.onclick = function() {
+      launchFullscreen(fsSection);
+    };
+  }
 });
 
 if (document.addEventListener) {
