@@ -69,7 +69,7 @@ class Widget < ApplicationRecord
       'P1M'
     end
   end
-  
+
   #
   # Include filters inherited from global dimension filters.
   #
@@ -87,7 +87,7 @@ class Widget < ApplicationRecord
   def query(override_filters = nil, override_options = {})
     Datastore::Query.new(
       datasource: datasource.name,
-      properties: attributes.merge(
+      properties: attributes.with_indifferent_access.merge(
         intervals: intervals,
         granularity: granularity
       ).merge(override_options),

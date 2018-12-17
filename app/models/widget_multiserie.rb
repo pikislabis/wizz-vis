@@ -3,7 +3,7 @@ class WidgetMultiserie < Widget
     dimension = dimensions.first
 
     # Get the top N values
-    dimension_values = super(filters, 'granularity' => 'all').map do |d|
+    dimension_values = super(filters, granularity: 'all').map do |d|
       d[dimension.name]
     end
 
