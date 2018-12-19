@@ -46,9 +46,11 @@ class MenuRange extends React.Component {
         },
         credentials: 'same-origin',
         body: JSON.stringify({
-          range: params.range,
-          start_time: params.startTime,
-          end_time: params.endTime
+          dashboard: {
+            range: params.range,
+            start_time: params.startTime,
+            end_time: params.endTime
+          }
         })
       }
     ).catch(error => this.setState({ error: error }));

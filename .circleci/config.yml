@@ -11,7 +11,7 @@ aliases:
   printf "Triggering Wizz-Vis Enterprise build\n\n"
   BUILD_INFO=$(curl -X POST -H -d \
       "{}" \
-      "https://circleci.com/api/v1/project/$ORGANIZATION/$ENTERPRISE_PROJECT/tree/$CIRCLE_BRANCH?circle-token=$CIRCLE_TOKEN")
+      "https://circleci.com/api/v1.1/project/github/$ORGANIZATION/$ENTERPRISE_PROJECT/build?circle-token=$CIRCLE_TOKEN")
   printf "\n\nBuild triggered\n\n"
   printf "Follow the progress of the build on \nhttps://circleci.com/gh/$ORGANIZATION/$ENTERPRISE_PROJECT/tree/$CIRCLE_BRANCH"
 
