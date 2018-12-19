@@ -3,7 +3,6 @@ class DashboardsController < ApplicationController
 
   before_action :set_dashboard, only: [:show, :edit, :update, :destroy, :update_layout]
   before_action :initialize_shared_store, only: :show
-  skip_before_action :verify_authenticity_token, only: :update_layout
 
   # GET /dashboards
   # GET /dashboards.json
@@ -45,6 +44,7 @@ class DashboardsController < ApplicationController
   # PATCH/PUT /dashboards/1.json
   def update
     respond_to do |format|
+      @dashboard.filters = [] if params[:dashboard]&.[](:filters_attributes)
       if @dashboard.update(dashboard_params)
         format.html { redirect_to @dashboard, notice: 'Dashboard was successfully updated.' }
         format.json { head :ok }
@@ -79,30 +79,35 @@ class DashboardsController < ApplicationController
   end
 
   private
-    def initialize_shared_store
-      redux_store('ReduxStore', props: default_store)
-    end
 
-    def default_store
-      default = 'last_1_hour' if @dashboard.range.nil? && @dashboard.start_time.nil?
-      { reloadTimestamp: nil,
-        setRanges: {
-          range: @dashboard.range || default,
-          startTime: @dashboard.start_time,
-          endTime: @dashboard.end_time
-        }
+  def initialize_shared_store
+    redux_store('ReduxStore', props: default_store)
+  end
+
+  def default_store
+    default = 'last_1_hour' if @dashboard.range.nil? && @dashboard.start_time.nil?
+    { reloadTimestamp: nil,
+      setRanges: {
+        range: @dashboard.range || default,
+        startTime: @dashboard.start_time,
+        endTime: @dashboard.end_time
+      },
+      setFilters: {
+        filters: ActiveModelSerializers::SerializableResource.new(@dashboard.filters).as_json
       }
-    end
+    }
+  end
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_dashboard
-      @dashboard = Dashboard.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_dashboard
+    @dashboard = Dashboard.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def dashboard_params
-      params.require(:dashboard).permit(
-        :name, :theme, :interval, :locked, :range, :start_time, :end_time
-      )
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def dashboard_params
+    params.require(:dashboard).permit(
+      :name, :theme, :interval, :locked, :range, :start_time, :end_time,
+      filters_attributes: %i[dimension_id operator value]
+    )
+  end
 end

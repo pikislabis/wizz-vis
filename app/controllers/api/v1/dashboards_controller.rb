@@ -259,7 +259,7 @@ module Api
       # options is a schemaless json, so it's neccessary to permit
       # all its fields.
       def dashboard_params
-        params[:widgets_attributes] = params.delete(:widgets)
+        params[:widgets_attributes] = params.delete(:widgets) if params[:widgets]
         params.permit(
           :name, :theme, :interval, :locked, :widgets_attributes,
           :range, :start_time, :end_time, filters: %i[dimension_name operator value]

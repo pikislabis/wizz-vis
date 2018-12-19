@@ -8,6 +8,7 @@ import * as actions from '../../actions/index';
 import Time from './../../utils/time';
 import FixedRange from './FixedRange';
 import RelativeRange from './RelativeRange';
+import Reload from './Reload';
 import startCase from 'lodash/startCase';
 
 class MenuRange extends React.Component {
@@ -57,12 +58,13 @@ class MenuRange extends React.Component {
 
   render() {
     return(
-      <div className='nav-entry col menu-range right'>
+      <div className='menu-range'>
         <div className='ellipsis' href='#' onClick={ this.toggleMenu }>
           { startCase(this.props.range) || Time.formatTimeRange(this.props.startTime, this.props.endTime) }
         </div>
 
         <div className={'dropdown-content ' + (this.state.menuOpen ? 'open' : 'close')}>
+          <Reload />
           <div className="col s12 cont">
             <div className="button-group">
               <ul className="group-container">

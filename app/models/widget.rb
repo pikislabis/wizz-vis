@@ -74,10 +74,16 @@ class Widget < ApplicationRecord
   # Include filters inherited from global dimension filters.
   #
   def filters
-    (options['filters'] || []).each do |f|
-      association(:filters).add_to_target(f)
+    @filters ||= begin
+      (options['filters'] || []).each do |f|
+        if f.is_a? Hash
+          association(:filters).add_to_target(Filter.new(f))
+        else
+          association(:filters).add_to_target(f)
+        end
+      end
+      super
     end
-    super
   end
 
   def data(override_filters = nil, override_options = {})

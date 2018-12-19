@@ -1,26 +1,24 @@
 crumb :root do
-  link "Home", root_path
+  link "<span class='breadcrumb'><i class='material-icons'>home</i></span>".html_safe,
+       root_path
 end
 
 # Dashboards
 crumb :dashboards do
-  link "Dashboards", dashboards_path
+  link 'Dashboards', dashboards_path
 end
 
 crumb :dashboard do |dashboard|
   link dashboard.name, dashboard
-  parent :dashboards
 end
 
 crumb :new_dashboard do |dashboard|
   link 'New', dashboard
-  parent :dashboards
 end
 
 crumb :edit_dashboard do |dashboard|
   link dashboard.name, dashboard
   link "Edit", dashboard
-  parent :dashboards
 end
 
 # crumb :projects do

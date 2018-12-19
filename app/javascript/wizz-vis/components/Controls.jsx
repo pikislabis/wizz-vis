@@ -7,28 +7,28 @@ import MenuRange from './controls/MenuRange';
 export default class Controls extends React.Component {
   constructor(props){
     super(props);
-
-    this.updateReload = this.updateReload.bind(this);
   }
 
-  updateReload() {
-    this.props.actions.updateReload(Date.now());
+  get edit_dashboard_url() {
+    return `/dashboards/${this.props.dashboard_id}/edit`;
   }
 
   render() {
     return(
-      <div>
-        <div className='nav-entry col right'>
-          <a href="#" onClick={ this.updateReload }>
-            <i className="material-icons">autorenew</i>
-          </a>
+      <div className="dashboard-controls right">
+        <div className="controls-entry col">
+          <MenuRange id={this.props.dashboard_id} />
         </div>
-        <div className='nav-entry col right'>
+        <div className='controls-entry col hide-on-small-only'>
           <a href="#" id='fsBtn'>
             <i className="material-icons">fullscreen</i>
           </a>
         </div>
-        <MenuRange id={this.props.dashboard_id} />
+        <div className='controls-entry col'>
+          <a href={this.edit_dashboard_url}>
+            <i className="material-icons">edit</i>
+          </a>
+        </div>
       </div>
     );
   }

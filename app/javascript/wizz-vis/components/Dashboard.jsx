@@ -55,7 +55,10 @@ export default class Dashboard extends React.Component {
       '/dashboards/' + this.props.id + '/layout.json',
       {
         method: 'put',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': ReactOnRails.authenticityToken()
+        },
         body: JSON.stringify({ layout: layout })
       }
     )
