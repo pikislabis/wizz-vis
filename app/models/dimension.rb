@@ -26,7 +26,7 @@ class Dimension < ApplicationRecord
 
   def query(limit, condition, start_time, end_time)
     data_source = Druid::DataSource.new(datasource.name, ENV['DRUID_URL'])
-    aggregator = datasource.aggregators.first
+    aggregator = datasource.aggregators.find_by(aggregator_type: %w[longSum doubleSum])
 
     query =
       Druid::Query::Builder.new.topn(
