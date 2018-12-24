@@ -134,6 +134,17 @@ Also, granularity can be represented with period:
 * PT1H
 * P1D
 
+Widgets which must have the granularity set to `all`, do not need to indicate the granularity at the time of creation.
+
+If a widget with granularity other than `all` has no granularity setted, it will be assigned one related to the selected time interval. Otherwise, it will use its own granularity.
+
+* PT1M: Less than or equal to one hour
+* PT5M: From one to six hours
+* PT1H: From six hours to one week
+* P1D: From one week to three months
+* P1W: From three months to one year
+* P1M: More than one year
+
 You have more information in Druid docs: [Aggregation Granularity](http://druid.io/docs/latest/querying/granularities.html).
 
 ### limit
@@ -243,7 +254,6 @@ It will represent a TopN query. In addition to the required attributes, we have 
 
 * dimensions (one)
 * aggregators (one)
-* granularity (set to `all`)
 * limit
 
 If more than one aggregator is set, only one will be represented (or a post aggregation that use these aggregators if necessary).
@@ -365,13 +375,13 @@ If the `aggregators` option is not included, all aggregators used in the table w
 
 * dimensions (one, representing coordinates)
 * aggregators (one)
-* granularity (`all`)
 * limit
 
-Also, we can set the size, color and behavior of each point through the `options` attribute.
+Also, we can set the visibility of the legend, or the size, color and behavior of each point through the `options` attribute.
 
 ```json
 "options": {
+  "legend": true | false, (default: true)
   "max_zoom": 15, (default: 1)
   "max_value": "max" | "average" | Number, (default: "max")
   "blur": 5, (default: 10)
@@ -445,9 +455,6 @@ The `options` attribute would be as follows:
 
 ```json
 {
-  "max_value": "max" | "average" | Number, (default: "max")
-  "opacity": 0.5, (default: 1)
-  "radius": 15, (default: 40)
   "image": "https://www.bookingtaxibarcelona.com/wp-content/uploads/2015/03/fira-gran-via-map.png",
   "keep_ratio": true,
   "gps_markers": [
@@ -485,7 +492,6 @@ Similar to WidgetHeatmap, but representing the data over an image instead of a m
 
 * dimensions (one, representing coordinates)
 * aggregators (one)
-* granularity (`all`)
 * limit
 
 It needs GPS markers to convert the latitude-longitude data to x-y points. Al least, three gps markers have to be configured.
@@ -494,17 +500,23 @@ x-y points are references for a image point starting at top-left corner of the i
 
 To keep the proportions of the used image, we have to use `keep_ratio` property.
 
+We can show or hide the legend through the `legend` property by setting it to true or false (default to true).
+
 The `options` attribute would be as follows:
 
 ```json
 {
+  "max_value": "max" | "average" | Number, (default: "max")
+  "opacity": 0.5, (default: 1)
+  "radius": 15, (default: 40)
   "image": "https://www.bookingtaxibarcelona.com/wp-content/uploads/2015/03/fira-gran-via-map.png",
   "keep_ratio": true,
   "gps_markers": [
     { "x": 261, "y": 208, "latitude": 41.355151, "longitude": 2.127733 },
     { "x": 530, "y": 217, "latitude": 41.357172, "longitude": 2.130533 },
     { "x": 785, "y": 406, "latitude": 41.3559, "longitude": 2.138092 }
-  ]
+  ],
+  "legend": false
 }
 ```
 
@@ -518,7 +530,6 @@ It will represent a GroupBy query. In addition to the required attributes, we ha
 
 * dimensions (two or more)
 * aggregators (one)
-* granularity (all)
 * limit
 
 The order of the dimensions is a bit random. So the order could be set in the options attribute:
@@ -541,7 +552,6 @@ It will represent a GroupBy query. In addition to the required attributes, we ha
 
 * dimensions (two: origin and destination)
 * aggregators (one)
-* granularity (all)
 * limit
 
 The order of the dimensions is a bit random. So the origin and the destination to calculate the matrix values can be set in the options attribute. Also, we can set the legend option:
@@ -700,7 +710,7 @@ Also, the attributes that can be configured using `options` field are:
 
 To keep the proportions of the used image, we have to use `keep_ratio` property.
 
-A link could be associated to the image. When clicking, it will open the `url`, that could be an external resource (`"type": "absolute"`) or a dashboard link (`"type": "dashboard"`).
+A link could be associated to the image. When clicking, it will open the `url`, that could be an external resource (`"type": "absolute"`) or a dashboard link (`"type": "dashboard"`). You can redirect to the previous page by setting the property `url` to `back` (`"url": "back"`).
 
 ### WidgetHistogram
 
@@ -714,7 +724,6 @@ It will have two ways of representation:
 In addition to the required attributes, we have to set:
 
 * aggregators (one)
-* granularity (all)
 * limit
 
 We can set the optional discard values option by specifying a value between `previous` or `next`:

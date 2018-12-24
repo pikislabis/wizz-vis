@@ -15,6 +15,8 @@ import ResumeValue from './../ResumeValue';
 import Time from './../../utils/time';
 import * as common from './../../props';
 import castArray from 'lodash/castArray';
+import { Textfit } from 'react-textfit';
+import cs from 'classnames';
 
 class CompareValue extends React.Component {
   getStyle() {
@@ -169,21 +171,29 @@ export default class WidgetValue extends React.Component {
           serie = null;
 
       if(this.showGauge()) {
+        let height = '100%';
+        if (this.props.compare_interval !== null) {
+          height = '85%';
+        } else if (this.showSerie()) {
+          height = '60%';
+        }
         element = <ReactEchartsCore
           echarts={echarts}
           option={ this.gaugeOptions() }
           style={
             { position: 'absolute',
               width: '100%',
-              height: '100%',
+              height: height,
               top: 10,
               left: 0 }
           }
           className='gauge' />;
       } else {
-        element = <div className='value'>
-          { Format.prefix(this.getValue(data), 2) }
-        </div>;
+        element =
+          <Textfit mode='single' forceSingleModeWidth={false} max={500}
+            className='value valign-wrapper' onReady={() => {true}}>
+            { Format.prefix(this.getValue(data), 2) }
+          </Textfit>;
       }
 
       if(this.showSerie()) {
@@ -206,13 +216,21 @@ export default class WidgetValue extends React.Component {
 
       const total = this.getValue(data);
       const total_compared = this.getValue(this.getCompareValues());
-
+      const cssClass = cs(
+        'value',
+        {
+          'with-serie': serie !== null,
+          'with-compare': this.props.compare_interval !== null
+        }
+      );
       return (
         <div className='widget-value'>
           <div className='card horizontal'>
-            <div className='card-stacked' style={{ fontSize: this.getFontSize() }}>
+            <div className='card-stacked'>
               <div className='card-content center-align valign-wrapper'>
-                {element}
+                <div className={ cssClass }>
+                  {element}
+                </div>
                 {
                   this.props.compare_interval ?
                     <CompareValue bottomAbsolute={this.showGauge()}

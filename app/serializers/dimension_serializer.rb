@@ -1,6 +1,7 @@
 class DimensionSerializer < ActiveModel::Serializer
   attributes(
     :id,
-    :name
+    :name,
+    :datasource_id
   )
 end

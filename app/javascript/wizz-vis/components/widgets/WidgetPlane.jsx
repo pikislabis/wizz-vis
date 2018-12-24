@@ -130,13 +130,21 @@ export default class WidgetPlane extends React.Component {
     return get(this.props, 'options.opacity') || 1;
   }
 
+  showLegend(data_length) {
+    if (data_length == 0)
+      return false;
+
+    const legend = get(this.props, 'options.legend');
+    return legend == undefined ? true : legend;
+  }
+
   render () {
     if(this.props.error)
       return(<Info error={this.props.error} />)
 
     const data = this.transformData(this.props.data);
 
-    if(data.length > 0)
+    if(this.showLegend(data.length))
       Graph.legend({
         max: parseFloat(this.getMax(data)),
         gradient: this.gradient

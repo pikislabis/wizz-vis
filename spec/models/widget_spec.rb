@@ -24,6 +24,29 @@ RSpec.describe Widget, type: :model do
     it_behaves_like 'intervalable'
   end
 
+  describe '#filters' do
+    context 'when no inherited filters' do
+      let(:filter_1) { create(:widget_filter, operator: 'eq', value: 'value_1') }
+      let(:widget)   { create(:widget, filters: [filter_1]) }
+
+      it 'just have its own filters' do
+        expect(widget.filters).to contain_exactly(filter_1)
+      end
+    end
+
+    context 'when have inherited filters' do
+      let(:filter_1) { create(:widget_filter, operator: 'eq', value: 'value_1') }
+      let(:filter_2) { create(:dashboard_filter, operator: 'eq', value: 'value_2') }
+      let(:widget)   { create(:widget, filters: [filter_1]) }
+
+      it 'have the filters included' do
+        widget.options['filters'] = [filter_2]
+        expect(widget.filters).to include(filter_1)
+        expect(widget.filters).to include(filter_2)
+      end
+    end
+  end
+
   describe '#data' do
     context 'when there are no data' do
       before do

@@ -90,7 +90,7 @@ class WidgetsController < ApplicationController
   def widget_params
     params.require(:widget).permit(
       :name, :title, :row, :col, :size_x, :size_y, :dashboard_id,
-      :range, :start_time, :end_time
+      :range, :start_time, :end_time, filters: %i[dimension_id operator value]
     )
   end
 end

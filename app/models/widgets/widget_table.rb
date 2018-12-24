@@ -1,9 +1,18 @@
 class WidgetTable < Widget
+  def self.model_name
+    Widget.model_name
+  end
+
+  # ==========================================================
+  # Default values
+  # ==========================================================
+  default :granularity, 'all'
+
   # ==========================================================
   # Validations
   # ==========================================================
   validates :granularity, inclusion: { in: %w[all],
-    message: "%{value} is not allowed." }
+                                       message: "%{value} is not allowed." }
   validate :validate_dimensions
   validate :validate_aggregators
 

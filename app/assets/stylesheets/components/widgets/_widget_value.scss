@@ -21,9 +21,24 @@
         font-weight: 700;
         z-index: 1;
         flex-direction: column;
+        height: 100%;
+        padding: 0px;
 
         .value {
           width: 100%;
+          height: 100%;
+          &.with-compare {
+            height: 85%;
+          }
+          &.with-serie {
+            height: 60%;
+          }
+          &.with-serie.with-compare {
+            height: 40%;
+          }
+          &.valign-wrapper > div {
+            width: 100%;
+          }
         }
 
         .value-compare {

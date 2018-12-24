@@ -95,6 +95,7 @@ module Api
               range: 'last_1_hour',
               start_time: '',
               end_time: '',
+              filters: [],
               widgets: [
                 {
                   type: 'WidgetValue',
@@ -259,7 +260,8 @@ module Api
       # all its fields.
       def dashboard_params
         params.permit(:name, :theme, :interval, :locked, :range,
-                      :start_time, :end_time).tap do |attr|
+                      :start_time, :end_time,
+                      filters: %i[dimension_name operator value]).tap do |attr|
           attr[:widgets_attributes] = (params[:widgets] || []).map do |w|
             w.permit(:type, :title, :row, :col, :size_x, :size_y, :range, :start_time,
                      :end_time, :granularity, :limit, :datasource_name,

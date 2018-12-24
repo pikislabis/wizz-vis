@@ -6,6 +6,7 @@ import { ResponsiveContainer } from 'recharts';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import cs from 'classnames';
+import request from 'axios';
 
 import WidgetTitle from './widgets/WidgetTitle';
 import WidgetSerie from './widgets/WidgetSerie';
@@ -73,7 +74,8 @@ class WidgetBase extends React.Component {
     if (this.props.reloadTimestamp !== prevProps.reloadTimestamp ||
         this.props.range !== prevProps.range ||
         this.props.startTime !== prevProps.startTime ||
-        this.props.endTime !== prevProps.endTime) {
+        this.props.endTime !== prevProps.endTime ||
+        JSON.stringify(this.props.filters) !== JSON.stringify(prevProps.filters)) {
       this.fetchData();
     }
   }
@@ -82,16 +84,22 @@ class WidgetBase extends React.Component {
     let button = $('.preloader-wrapper[widget_id="' + this.props.id + '"]');
     button.addClass('active');
     return (
-      fetch(
-        Format.buildUrl(
-          '/widgets/' + this.props.id + '/data.json',
-          {
+      request
+        .post('/widgets/' + this.props.id + '/data.json',
+        {
+          widget: {
             range: this.props.range || '',
             start_time: this.props.startTime || '',
-            end_time: this.props.endTime || ''
-          },
-          'widget'
-        ))
+            end_time: this.props.endTime || '',
+            filters: this.props.filters
+          }
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': ReactOnRails.authenticityToken()
+          }
+        })
         .then(response => Errors.handleErrors(response))
         .then(widget => {
           if(widget.data && JSON.stringify(widget.data) !== JSON.stringify(this.state.$$data) ||
@@ -105,9 +113,10 @@ class WidgetBase extends React.Component {
         })
         .then(data => button.removeClass('active'))
         .catch(error => {
+          const message = error.response.data.error;
           button.removeClass('active');
-          if(JSON.stringify(error.error) !== JSON.stringify(this.state.error)) {
-            this.setState({ $$data: [], error: error.error });
+          if(message !== this.state.error) {
+            this.setState({ $$data: [], error: message });
           }
         })
     );
@@ -218,7 +227,8 @@ function mapStateToProps(state) {
     range: state.setRanges.range,
     startTime: state.setRanges.startTime,
     endTime: state.setRanges.endTime,
-    reloadTimestamp: state.reloadTimestamp
+    reloadTimestamp: state.reloadTimestamp,
+    filters: state.setFilters.filters
   };
 }
 

@@ -105,6 +105,14 @@ export default class WidgetHeatmap extends React.Component {
     return get(this.props, 'options.gradient') || gradient;
   }
 
+  showLegend(data_length) {
+    if (data_length == 0)
+      return false;
+
+    const legend = get(this.props, 'options.legend');
+    return legend == undefined ? true : legend;
+  }
+
   render () {
     const cssClass = cs({ 'widget-error': this.state.error });
 
@@ -139,7 +147,7 @@ export default class WidgetHeatmap extends React.Component {
             attribution={Theme.map(this.props.theme).attribution}
           />
           {
-            data.length > 0 ?
+            this.showLegend(data.length) ?
               <LegendControl
                 max = { parseFloat(this.getMax(data)) }
                 gradient = { this.gradient }

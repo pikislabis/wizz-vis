@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :datasource do
-    name 'Datasource'
+    name { 'Datasource' }
 
     factory :datasource_with_relations do
       after(:create) do |datasource|

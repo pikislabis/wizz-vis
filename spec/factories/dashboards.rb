@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :dashboard do
-    name 'Dashboard'
+    name { 'Dashboard' }
   end
 end

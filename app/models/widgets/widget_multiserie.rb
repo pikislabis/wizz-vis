@@ -11,7 +11,7 @@ class WidgetMultiserie < Widget
     dimension = dimensions.first
 
     # Get the top N values
-    dimension_values = super(filters, 'granularity' => 'all').map do |d|
+    dimension_values = super(filters, granularity: 'all').map do |d|
       d[dimension.name]
     end
 
@@ -33,7 +33,7 @@ class WidgetMultiserie < Widget
       # If there are filters of the dimension selected, they have to be excluded
       # to not conflict with the above filter.
       multiseries << super(
-        filters.reject { |f| f.id && f.dimension_id.eql?(dimension.id) }
+        filters.reject { |f| f.dimension.name.eql?(dimension.name) && f.value != val }
       ).map do |s|
         s.merge((val || 'N/A') => s[metric]).except(metric)
       end

@@ -13,6 +13,7 @@ namespace :api do
 
     resources :widgets, only: %i[show create update destroy] do
       get :data, on: :member
+      get :query, on: :member
     end
   end
 end

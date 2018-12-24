@@ -11,3 +11,11 @@ i.btn {
   display: flex;
   flex-direction: row
 }
+
+.btn-small {
+  height: 32.4px;
+  line-height: 32.4px;
+  font-size: 13px;
+  padding: 0 5px;
+  min-width: 70px;
+}

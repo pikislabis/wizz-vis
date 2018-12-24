@@ -95,6 +95,8 @@ RSpec.describe WidgetsController, type: :controller do
   end
 
   describe "PUT #update" do
+    let(:datasource) { create(:datasource_with_relations) }
+
     context "with valid params" do
       let(:new_attributes) {
         skip("Add a hash of attributes valid for your model")
@@ -112,6 +114,48 @@ RSpec.describe WidgetsController, type: :controller do
         put :update, params: {id: widget.to_param, widget: valid_attributes}, session: valid_session
         expect(response).to redirect_to(widget)
       end
+
+      it "gets a granularity relative to the range one hour" do
+        widget = FactoryBot.create(:widget_range)
+        put :update, params: {id: widget.to_param, widget: { range: 'last_1_hour' }}, session: valid_session
+        widget.reload
+        expect(widget.granularity).to eq('PT1M')
+      end
+
+      it "gets a granularity relative to the range 6 hours" do
+        widget = FactoryBot.create(:widget_range)
+        put :update, params: {id: widget.to_param, widget: { range: 'last_6_hours' }}, session: valid_session
+        widget.reload
+        expect(widget.granularity).to eq('PT5M')
+      end
+
+      it "gets a granularity relative to the range 2 days" do
+        widget = FactoryBot.create(:widget_range)
+        put :update, params: {id: widget.to_param, widget: { range: 'last_2_days' }}, session: valid_session
+        widget.reload
+        expect(widget.granularity).to eq('PT1H')
+      end
+
+      it "gets a granularity relative to the range 2 weeks" do
+        widget = FactoryBot.create(:widget_range)
+        put :update, params: {id: widget.to_param, widget: { range: 'last_2_weeks' }}, session: valid_session
+        widget.reload
+        expect(widget.granularity).to eq('P1D')
+      end
+
+      it "gets a granularity relative to the range 6 months" do
+        widget = FactoryBot.create(:widget_range)
+        put :update, params: {id: widget.to_param, widget: { range: 'last_24_weeks' }}, session: valid_session
+        widget.reload
+        expect(widget.granularity).to eq('P1W')
+      end
+
+      it "gets a granularity relative to the range one year" do
+        widget = FactoryBot.create(:widget_range)
+        put :update, params: {id: widget.to_param, widget: { range: 'last_54_weeks' }}, session: valid_session
+        widget.reload
+        expect(widget.granularity).to eq('P1M')
+      end
     end
 
     context "with invalid params" do
@@ -119,6 +163,17 @@ RSpec.describe WidgetsController, type: :controller do
         widget = Widget.create! valid_attributes
         put :update, params: {id: widget.to_param, widget: invalid_attributes}, session: valid_session
         expect(response).to be_success
+      end
+
+      it "does not update granularity param if it is forced to all" do
+        widget = FactoryBot.create(:widget_table,
+                                   datasource: datasource,
+                                   dimensions: datasource.dimensions.first(1),
+                                   aggregators: datasource.aggregators.first(1))
+        put :update, params: { id: widget.to_param, widget: { granularity: 'PT1H' } },
+                     session: valid_session
+        widget.reload
+        expect(widget.granularity).to eq('all')
       end
     end
   end
