@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Map, TileLayer, AttributionControl } from 'react-leaflet';
+import { isMobile } from 'react-device-detect';
 import WidgetMarker from '../WidgetMarker';
 import WidgetPopup from '../WidgetPopup';
 import Theme from './../../utils/theme';
@@ -98,6 +99,8 @@ export default class WidgetLocation extends React.Component {
           {...bound_params}
           scrollWheelZoom={false}
           attributionControl={false}
+          dragging={!isMobile}
+          tap={!isMobile}
           ref='map'
         >
           <AttributionControl

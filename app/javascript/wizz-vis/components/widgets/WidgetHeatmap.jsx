@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Map, Marker, Popup, TileLayer, AttributionControl } from 'react-leaflet';
 import HeatmapLayer from 'react-leaflet-heatmap-layer';
+import { isMobile } from 'react-device-detect';
 import cs from 'classnames';
 import Theme from './../../utils/theme';
 import Info from './../Info';
@@ -126,6 +127,8 @@ export default class WidgetHeatmap extends React.Component {
           zoom={13}
           scrollWheelZoom={false}
           attributionControl={false}
+          dragging={!isMobile}
+          tap={!isMobile}
         >
           <HeatmapLayer
             fitBoundsOnLoad
