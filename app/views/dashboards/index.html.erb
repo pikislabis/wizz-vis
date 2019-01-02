@@ -1,6 +1,6 @@
 <% breadcrumb :dashboards %>
 <%= content_for :search_bar do %>
-  <div class='center col m7 s8 l6'>
+  <div class='center col m7 s10 l6'>
     <%= form_tag(dashboards_path, method: :get, remote: true) do %>
       <div class='input-field col s12'>
         <i class='material-icons prefix'>search</i>
@@ -13,7 +13,7 @@
   hide-on-small-only
 <% end %>
 <%= content_for :row_class do %>
-  col l3 m5 s2
+  col l3 m5 s1
 <% end %>
 <div class="container">
   <div class="card">
