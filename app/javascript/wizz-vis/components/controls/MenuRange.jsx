@@ -8,7 +8,6 @@ import * as actions from '../../actions/index';
 import Time from './../../utils/time';
 import FixedRange from './FixedRange';
 import RelativeRange from './RelativeRange';
-import Reload from './Reload';
 import startCase from 'lodash/startCase';
 
 class MenuRange extends React.Component {
@@ -66,7 +65,6 @@ class MenuRange extends React.Component {
         </div>
 
         <div className={'dropdown-content ' + (this.state.menuOpen ? 'open' : 'close')}>
-          <Reload />
           <div className="col s12 cont">
             <div className="button-group">
               <ul className="group-container">
