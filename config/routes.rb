@@ -19,4 +19,11 @@ Rails.application.routes.draw do
   draw :api
 
   root to: 'dashboards#index'
+
+  # Dynamic error pages
+  if Rails.env.production?
+    %w(400 404 500).each do |code|
+      get code, controller: :errors, action: :error, code: code
+    end
+  end
 end
