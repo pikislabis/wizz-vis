@@ -126,6 +126,13 @@
   z-index: 9999;
   right: 0;
 
+  @media (max-width: 400px) {
+    &.fixed {
+      left: 0px;
+      right: auto;
+    }
+  }
+
   &.fixed > .float-menu {
     width: auto;
   }
