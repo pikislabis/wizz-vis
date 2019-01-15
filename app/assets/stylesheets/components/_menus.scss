@@ -7,7 +7,7 @@
     cursor: pointer;
   }
 
-  .dropdown-content {
+  .float-menu {
     padding: 10px 0px 0px 10px;
     width: 280px !important;
     overflow-y: visible;
@@ -53,6 +53,7 @@
             box-shadow: 0 1px 1px 0 rgba(#000, 0.1);
             border: 1px solid rgba($secondary-color, 0.5);
             border-right: 0;
+            width: 100%;
 
             &:last-child {
               border-right: 1px solid rgba($secondary-color, 0.5);
