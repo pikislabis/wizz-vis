@@ -22,12 +22,14 @@ export default class WidgetTitle extends React.Component {
   }
 
   render () {
-    let cssClass = cs(
+    const cssClass = cs(
       'widget-title',
       {
         'locked': this.isLocked
       }
     );
+
+    const { overrideInterval, showOverrideInterval } = this.props;
 
     return (
       <div className={ cssClass }>
@@ -40,7 +42,7 @@ export default class WidgetTitle extends React.Component {
         <div className='options right'>
           <WidgetRefresh widget_id={this.props.widget_id} />
           {
-            this.props.overrideInterval ?
+            overrideInterval && showOverrideInterval ?
               <IntervalInfo intervalAttributes={this.props.intervalAttributes} /> :
               null
           }
@@ -63,9 +65,14 @@ WidgetTitle.propTypes = {
   locked: PropTypes.bool,
   remove: PropTypes.func,
   overrideInterval: PropTypes.bool,
+  showOverrideInterval: PropTypes.bool,
   intervalAttributes: PropTypes.shape({
     range: PropTypes.string,
     start_time: PropTypes.string,
     end_time: PropTypes.string
   })
+};
+
+WidgetTitle.defaultProps = {
+  showOverrideInterval: true
 };

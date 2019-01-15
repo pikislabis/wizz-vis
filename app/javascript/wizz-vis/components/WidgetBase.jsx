@@ -173,16 +173,19 @@ class WidgetBase extends React.Component {
       }
     );
 
+    const { links, showOverrideInterval } = this.props.options;
+
     return (
       <div className = { cssClass } style = { style }>
         <WidgetTitle
           widget_id={this.props.id}
           title={this.props.title}
-          links={this.props.options.links}
+          links={links}
           locked={this.props.locked}
           remove={this.removeWidget.bind(this)}
           intervalAttributes={this.props.interval_attributes}
           overrideInterval={this.props['override_interval?']}
+          showOverrideInterval={showOverrideInterval}
         />
         <div className='widget-content' ref='content'>
           { this.background('image') ?
