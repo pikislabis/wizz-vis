@@ -2,8 +2,8 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import AddFilter from './AddFilter';
-import FilterItems from './FilterItems';
+import AddFilter from './filters/AddFilter';
+import FilterItems from './filters/FilterItems';
 
 export default class Filters extends React.Component {
   constructor(props){

@@ -5,7 +5,7 @@ import React from 'react';
 import request from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import ClearableInput from './ClearableInput';
+import ClearableInput from './../ClearableInput';
 import FilterOperatorDropdown from './FilterOperatorDropdown';
 
 class FilterMenu extends React.Component {

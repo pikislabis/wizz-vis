@@ -2,7 +2,7 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import FloatMenu from './FloatMenu';
+import FloatMenu from './../FloatMenu';
 import FilterMenu from './FilterMenu';
 import cs from 'classnames';
 
