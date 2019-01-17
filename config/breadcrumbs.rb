@@ -9,7 +9,10 @@ crumb :dashboards do
 end
 
 crumb :dashboard do |dashboard|
-  link dashboard.name, dashboard
+  link "<span class='tooltipped' data-tooltip='#{dashboard.name}'>\
+          #{dashboard.name}\
+        </span>".html_safe,
+       dashboard
 end
 
 crumb :new_dashboard do |dashboard|
