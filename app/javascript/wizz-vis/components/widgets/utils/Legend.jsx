@@ -3,7 +3,7 @@
 import PropTypes from 'prop-types';
 import { MapControl } from 'react-leaflet';
 import L from 'leaflet';
-import Graph from './../utils/graph';
+import Graph from './../../../utils/graph';
 
 export default class LegendControl extends MapControl {
 

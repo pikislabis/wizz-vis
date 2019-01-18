@@ -1,12 +1,12 @@
 /* jshint esversion: 6 */
 
 import React from 'react';
-import Compare from './../../utils/compare';
-import Format from './../../utils/format';
-import ResumeValue from './../ResumeValue';
+import Compare from './../../../utils/compare';
+import Format from './../../../utils/format';
+import ResumeValue from './ResumeValue';
 import PropTypes from 'prop-types';
 
-export default class WidgetResume extends React.Component {
+export default class Resume extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -36,7 +36,7 @@ export default class WidgetResume extends React.Component {
   }
 };
 
-WidgetResume.propTypes = {
+Resume.propTypes = {
   aggregators: PropTypes.array,
   data: PropTypes.array
 };

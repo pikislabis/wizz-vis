@@ -1,7 +1,7 @@
 /* jshint esversion: 6 */
 
 import React from 'react';
-import Info from './Info';
+import Info from './widgets/utils/Info';
 
 export default class ErrorBoundary extends React.Component {
   constructor(props) {

@@ -1,10 +1,10 @@
 /* jshint esversion: 6 */
 
 import React, { Component } from 'react';
-import WidgetDrilldown from './WidgetDrilldown';
-import WidgetRefresh from './WidgetRefresh';
-import WidgetTrash from './WidgetTrash';
-import IntervalInfo from '../IntervalInfo';
+import Drilldown from './utils/Drilldown';
+import Refresh from './utils/Refresh';
+import Trash from './utils/Trash';
+import IntervalInfo from './utils/IntervalInfo';
 import cs from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -35,25 +35,25 @@ export default class WidgetTitle extends React.Component {
       <div className={ cssClass }>
         {
           this.haveLinks ?
-            <WidgetDrilldown widget_id={this.props.widget_id} links={this.props.links} /> :
+            <Drilldown widget_id={this.props.widget_id} links={this.props.links} /> :
             null
         }
         <div className='title_text'>{ this.props.title }</div>
         <div className='options right'>
-          <WidgetRefresh widget_id={this.props.widget_id} />
+          <Refresh widget_id={this.props.widget_id} />
           {
             overrideInterval && showOverrideInterval ?
               <IntervalInfo intervalAttributes={this.props.intervalAttributes} /> :
               null
           }
-          <WidgetTrash remove={this.props.remove} isLocked={this.props.locked} />
+          <Trash remove={this.props.remove} isLocked={this.props.locked} />
         </div>
       </div>
     )
   }
 };
 
-WidgetTitle.propTypes = {
+Title.propTypes = {
   title: PropTypes.string,
   links: PropTypes.arrayOf(
     PropTypes.shape({
@@ -73,6 +73,6 @@ WidgetTitle.propTypes = {
   })
 };
 
-WidgetTitle.defaultProps = {
+Title.defaultProps = {
   showOverrideInterval: true
 };

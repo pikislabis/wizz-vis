@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class WidgetTrash extends React.Component {
+export default class Trash extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -23,7 +23,7 @@ export default class WidgetTrash extends React.Component {
   }
 };
 
-WidgetTrash.propTypes = {
+Trash.propTypes = {
   isLocked: PropTypes.bool,
   remove: PropTypes.func
 };

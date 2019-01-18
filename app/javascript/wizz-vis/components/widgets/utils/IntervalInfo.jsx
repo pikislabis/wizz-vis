@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Time from './../utils/time';
+import Time from './../../../utils/time';
 import startCase from 'lodash/startCase';
 
 export default class IntervalInfo extends React.Component {

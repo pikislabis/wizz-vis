@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import ArrayUtil from './../../utils/array';
 import gps_utils from './../../utils/gps';
 import WidgetImage from './WidgetImage';
-import PlaneRoute from './../PlaneRoute';
-import Info from './../Info';
+import PlaneRoute from './utils/PlaneRoute';
+import Info from './utils/Info';
 import * as common from './../../props';
 
 export default class WidgetPlaneRoute extends React.Component {

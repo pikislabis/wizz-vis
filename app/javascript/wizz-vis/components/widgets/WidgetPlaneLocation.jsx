@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Stage, Layer, Circle, Label, Tag, Text } from 'react-konva';
 import WidgetImage from './WidgetImage';
-import Info from './../Info';
+import Info from './utils/Info';
 import gps_utils from './../../utils/gps';
 import Time from './../../utils/time';
 import Format from './../../utils/format';

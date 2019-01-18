@@ -11,7 +11,7 @@ import 'echarts/lib/component/tooltip';
 import Colors from './../../utils/colors';
 import Format from './../../utils/format';
 import Theme from './../../utils/theme';
-import Info from './../Info';
+import Info from './utils/Info';
 import uniqBy from 'lodash/uniqBy';
 import * as common from './../../props';
 import castArray from 'lodash/castArray';

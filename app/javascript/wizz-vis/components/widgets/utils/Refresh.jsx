@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class WidgetRefresh extends React.Component {
+export default class Refresh extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -25,6 +25,6 @@ export default class WidgetRefresh extends React.Component {
   }
 };
 
-WidgetRefresh.propTypes = {
+Refresh.propTypes = {
   widget_id: PropTypes.number
 };

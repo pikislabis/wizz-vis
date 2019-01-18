@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class WidgetPopupElement extends React.Component {
+export default class PopupElement extends React.Component {
   render () {
     return (
       <li>
@@ -13,7 +13,7 @@ export default class WidgetPopupElement extends React.Component {
   }
 }
 
-WidgetPopupElement.propTypes = {
+PopupElement.propTypes = {
   name: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.number,

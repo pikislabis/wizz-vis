@@ -8,7 +8,7 @@ import Colors from './../../utils/colors';
 import Theme from './../../utils/theme';
 import Format from './../../utils/format';
 import graph_utils from './../../utils/graph';
-import Info from './../Info';
+import Info from './utils/Info';
 import * as common from './../../props';
 import castArray from 'lodash/castArray';
 

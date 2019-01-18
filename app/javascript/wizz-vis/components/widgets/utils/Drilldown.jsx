@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class WidgetDrilldown extends React.Component {
+export default class Drilldown extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -33,7 +33,7 @@ export default class WidgetDrilldown extends React.Component {
   }
 }
 
-WidgetDrilldown.propTypes = {
+Drilldown.propTypes = {
   widget_id: PropTypes.number,
   links: PropTypes.arrayOf(
     PropTypes.shape({

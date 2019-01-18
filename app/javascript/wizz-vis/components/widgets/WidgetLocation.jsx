@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Map, TileLayer, AttributionControl } from 'react-leaflet';
 import { isMobile } from 'react-device-detect';
-import WidgetMarker from '../WidgetMarker';
-import WidgetPopup from '../WidgetPopup';
+import WidgetMarker from './utils/WidgetMarker';
+import WidgetPopup from './utils/WidgetPopup';
 import Theme from './../../utils/theme';
 import Format from './../../utils/format';
 import Locatable from './../../models/locatable';
@@ -13,7 +13,7 @@ delete L.Icon.Default.prototype._getIconUrl;
 import uniqWith from 'lodash/uniqWith';
 import isEqual from 'lodash/isEqual';
 import cs from 'classnames';
-import Info from './../Info';
+import Info from './utils/Info';
 import * as common from './../../props';
 
 L.Icon.Default.mergeOptions({

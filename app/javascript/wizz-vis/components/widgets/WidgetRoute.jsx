@@ -6,8 +6,8 @@ import { Map, TileLayer, AttributionControl } from 'react-leaflet';
 import L from 'leaflet';
 import cs from 'classnames';
 import Theme from './../../utils/theme';
-import Info from './../Info';
-import Routing from '../Routing';
+import Info from './utils/Info';
+import Routing from './utils/Routing';
 import * as common from './../../props';
 
 export default class WidgetRoute extends React.Component {

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ReactHeatmap from '../../vendor/ReactHeatmap';
 import gps_utils from './../../utils/gps';
 import WidgetImage from './WidgetImage';
-import Info from './../Info';
+import Info from './utils/Info';
 import * as common from './../../props';
 import get from 'lodash/get';
 import Graph from './../../utils/graph';

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {Popup} from 'react-leaflet';
-import WidgetPopupElement from './WidgetPopupElement';
+import PopupElement from './PopupElement';
 import PropTypes from 'prop-types';
 
 export default class WidgetPopup extends React.Component {
@@ -12,12 +12,12 @@ export default class WidgetPopup extends React.Component {
         <ul>
           {
             this.props.dimensions.map((dim, index) =>
-              <WidgetPopupElement key={index} name={dim.name} value={dim.value} />
+              <PopupElement key={index} name={dim.name} value={dim.value} />
             )
           }
           {
             this.props.aggregators.map((agg, index) =>
-              <WidgetPopupElement key={index} name={agg.name} value={agg.value} />
+              <PopupElement key={index} name={agg.name} value={agg.value} />
             )
           }
         </ul>
