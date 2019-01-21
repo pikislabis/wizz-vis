@@ -6,12 +6,12 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import DataTables from 'material-ui-datatables';
 import Theme from './../../utils/theme';
 import Format from './../../utils/format';
-import Info from './../Info';
+import Info from './utils/Info';
 import castArray from 'lodash/castArray';
 import find from 'lodash/find';
 import pick from 'lodash/pick';
 import cloneDeep from 'lodash/cloneDeep';
-import ResumeValue from './../ResumeValue';
+import ResumeValue from './utils/ResumeValue';
 import * as common from './../../props';
 
 const HEADER_HEIGHT = 80;

@@ -1,12 +1,12 @@
 /* jshint esversion: 6 */
 
 import React, { Component } from 'react';
-import ArrayUtil from './../utils/array';
-import Time from './../utils/time';
+import ArrayUtil from './../../../utils/array';
+import Time from './../../../utils/time';
 import L from 'leaflet';
 import { Popup } from 'react-leaflet';
 import 'leaflet-routing-machine';
-import '../vendor/leaflet.textpath.js';
+import '../../../vendor/leaflet.textpath.js';
 
 function number_to_letter(number) {
   return (number + 10).toString(36).toUpperCase();

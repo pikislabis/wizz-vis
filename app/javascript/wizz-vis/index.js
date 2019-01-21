@@ -11,7 +11,6 @@ import DashboardApp from './startup/DashboardApp';
 import ControlsApp from './startup/ControlsApp';
 import FiltersApp from './startup/FiltersApp';
 import WidgetBase from './components/WidgetBase';
-import Info from './components/Info';
 import Clock from './components/Clock';
 
 import ReduxStore from './store/index';
@@ -21,8 +20,7 @@ ReactOnRails.register({
   WidgetBase,
   Clock,
   ControlsApp,
-  FiltersApp,
-  Info
+  FiltersApp
 });
 
 ReactOnRails.registerStore({

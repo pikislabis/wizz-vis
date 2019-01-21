@@ -2,8 +2,8 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import FloatMenu from './FloatMenu';
-import ClearableInput from './ClearableInput';
+import FloatMenu from './../FloatMenu';
+import ClearableInput from './../ClearableInput';
 
 export default class AddFilter extends React.Component {
   constructor(props){

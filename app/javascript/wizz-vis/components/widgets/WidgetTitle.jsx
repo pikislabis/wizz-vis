@@ -1,10 +1,10 @@
 /* jshint esversion: 6 */
 
 import React, { Component } from 'react';
-import WidgetDrilldown from './WidgetDrilldown';
-import WidgetRefresh from './WidgetRefresh';
-import WidgetTrash from './WidgetTrash';
-import IntervalInfo from '../IntervalInfo';
+import Drilldown from './utils/Drilldown';
+import Refresh from './utils/Refresh';
+import Trash from './utils/Trash';
+import IntervalInfo from './utils/IntervalInfo';
 import cs from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -22,29 +22,31 @@ export default class WidgetTitle extends React.Component {
   }
 
   render () {
-    let cssClass = cs(
+    const cssClass = cs(
       'widget-title',
       {
         'locked': this.isLocked
       }
     );
 
+    const { overrideInterval, showOverrideInterval } = this.props;
+
     return (
       <div className={ cssClass }>
         {
           this.haveLinks ?
-            <WidgetDrilldown widget_id={this.props.widget_id} links={this.props.links} /> :
+            <Drilldown widget_id={this.props.widget_id} links={this.props.links} /> :
             null
         }
         <div className='title_text'>{ this.props.title }</div>
         <div className='options right'>
-          <WidgetRefresh widget_id={this.props.widget_id} />
+          <Refresh widget_id={this.props.widget_id} />
           {
-            this.props.overrideInterval ?
+            overrideInterval && showOverrideInterval ?
               <IntervalInfo intervalAttributes={this.props.intervalAttributes} /> :
               null
           }
-          <WidgetTrash remove={this.props.remove} isLocked={this.props.locked} />
+          <Trash remove={this.props.remove} isLocked={this.props.locked} />
         </div>
       </div>
     )
@@ -63,9 +65,14 @@ WidgetTitle.propTypes = {
   locked: PropTypes.bool,
   remove: PropTypes.func,
   overrideInterval: PropTypes.bool,
+  showOverrideInterval: PropTypes.bool,
   intervalAttributes: PropTypes.shape({
     range: PropTypes.string,
     start_time: PropTypes.string,
     end_time: PropTypes.string
   })
+};
+
+WidgetTitle.defaultProps = {
+  showOverrideInterval: true
 };

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Info from './../Info';
+import Info from './utils/Info';
 import get from 'lodash/get';
 import Format from './../../utils/format';
 import * as common from './../../props';

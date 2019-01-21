@@ -3,7 +3,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import request from 'axios';
-import Dropdown from './Dropdown';
+import Dropdown from './../Dropdown';
 
 const OPERATORS = [
   {

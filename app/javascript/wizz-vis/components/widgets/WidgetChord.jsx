@@ -6,7 +6,7 @@ import { Chord } from '@nivo/chord';
 import graph_utils from './../../utils/graph';
 import Format from './../../utils/format';
 import Colors from './../../utils/colors';
-import Info from './../Info';
+import Info from './utils/Info';
 import * as common from './../../props';
 import castArray from 'lodash/castArray';
 

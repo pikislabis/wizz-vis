@@ -7,7 +7,7 @@ import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid,
 import Colors from './../../utils/colors';
 import Theme from './../../utils/theme';
 import Format from './../../utils/format';
-import Info from './../Info';
+import Info from './utils/Info';
 import * as common from './../../props';
 import castArray from 'lodash/castArray';
 

@@ -18,13 +18,11 @@ class Reload extends React.Component {
 
   render() {
     return(
-      <div className="row">
-        <div className="col s12 right-align">
-          <a className="btn btn-small" href="#" onClick={ this.updateReload }>
-            Force Reload
-          </a>
-        </div>
-      </div>
+      <span>
+        <a href="#" onClick={ this.updateReload }>
+          <i className="material-icons">refresh</i> Force Reload
+        </a>
+      </span>
     );
   }
 }

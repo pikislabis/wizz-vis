@@ -8,8 +8,8 @@ import * as actions from '../../actions/index';
 import Time from './../../utils/time';
 import FixedRange from './FixedRange';
 import RelativeRange from './RelativeRange';
-import Reload from './Reload';
 import startCase from 'lodash/startCase';
+import FloatMenu from './../FloatMenu';
 
 class MenuRange extends React.Component {
   constructor(props){
@@ -23,13 +23,16 @@ class MenuRange extends React.Component {
       endTime: this.props.endTime || ''
     };
 
-    this.toggleMenu = this.toggleMenu.bind(this);
     this.setMenu = this.setMenu.bind(this);
     this.updateDashboard = this.updateDashboard.bind(this);
   }
 
-  toggleMenu() {
-    this.setState({ menuOpen: !this.state.menuOpen });
+  closeMenu = () => {
+    this.setState( {menuOpen: false} );
+  }
+
+  openMenu = () => {
+    this.setState({ menuOpen: true });
   }
 
   setMenu(value) {
@@ -55,18 +58,18 @@ class MenuRange extends React.Component {
       }
     ).catch(error => this.setState({ error: error }));
 
-    this.toggleMenu();
+    this.closeMenu();
   }
 
   render() {
     return(
       <div className='menu-range'>
-        <div className='ellipsis' href='#' onClick={ this.toggleMenu }>
+        <div className='ellipsis' href='#' onClick={ this.openMenu }>
           { startCase(this.props.range) || Time.formatTimeRange(this.props.startTime, this.props.endTime) }
         </div>
-
-        <div className={'dropdown-content ' + (this.state.menuOpen ? 'open' : 'close')}>
-          <Reload />
+        <FloatMenu
+          onClose={this.closeMenu}
+          open={this.state.menuOpen}>
           <div className="col s12 cont">
             <div className="button-group">
               <ul className="group-container">
@@ -83,7 +86,7 @@ class MenuRange extends React.Component {
               <FixedRange updateDashboard={ this.updateDashboard } />
             }
           </div>
-        </div>
+        </FloatMenu>
       </div>
     );
   }

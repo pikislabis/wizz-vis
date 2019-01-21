@@ -7,7 +7,7 @@
   </div>
 <% end %>
 <%= content_for :nav_entries do %>
-  <div class='col xl3 l4 m12 s12'>
+  <div class='col xl3 l4 m3 s12'>
     <%= react_component("ControlsApp", props: { dashboard_id: @dashboard.id }.to_json, prerender: false) %>
   </div>
 <% end %>
@@ -15,9 +15,9 @@
   breadcrumb-items hide-on-small-only
 <% end %>
 <%= content_for :row_class do %>
-  col xl3 l4 m6 s1
+  col xl3 l4 m3 s1
 <% end %>
 <div id='fsSection'>
-  <%= primary_logo('brand-logo menu-smooth-scroll fs-logo') %>
+  <%= primary_logo('fs-logo') %>
   <%= react_component("DashboardApp", props: @dashboard.to_json, prerender: false) %>
 </div>

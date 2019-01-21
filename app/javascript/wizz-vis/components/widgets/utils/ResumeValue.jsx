@@ -1,7 +1,7 @@
 /* jshint esversion: 6 */
 
 import React from 'react';
-import Format from './../utils/format';
+import Format from './../../../utils/format';
 import PropTypes from 'prop-types';
 
 export default class ResumeValue extends React.Component {

@@ -10,9 +10,9 @@ import Theme from './../../utils/theme';
 import Time from './../../utils/time';
 import Format from './../../utils/format';
 import Compare from './../../utils/compare';
-import Info from './../Info';
+import Info from './utils/Info';
 import castArray from 'lodash/castArray';
-import WidgetResume from './WidgetResume';
+import Resume from './utils/Resume';
 import * as common from './../../props';
 
 export default class WidgetSerie extends React.Component {
@@ -152,7 +152,7 @@ export default class WidgetSerie extends React.Component {
         <div style = {{ position: 'relative', width: '100%', height: '100%' }} >
           {
             this.props.options.compare ?
-            <WidgetResume
+            <Resume
               aggregators={this.state.aggregators}
               data={this.compare()} /> :
             null
