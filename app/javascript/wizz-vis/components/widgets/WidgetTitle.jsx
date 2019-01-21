@@ -53,7 +53,7 @@ export default class WidgetTitle extends React.Component {
   }
 };
 
-Title.propTypes = {
+WidgetTitle.propTypes = {
   title: PropTypes.string,
   links: PropTypes.arrayOf(
     PropTypes.shape({
@@ -73,6 +73,6 @@ Title.propTypes = {
   })
 };
 
-Title.defaultProps = {
+WidgetTitle.defaultProps = {
   showOverrideInterval: true
 };
