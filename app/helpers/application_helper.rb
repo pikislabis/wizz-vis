@@ -5,18 +5,22 @@ module ApplicationHelper
 
   def nav_logos
     capture do
-      concat primary_logo
+      concat primary_logo_with_link
       concat secondary_logo
     end
   end
 
-  def primary_logo(classname='brand-logo menu-smooth-scroll')
+  def primary_logo_with_link(classname = 'brand-logo menu-smooth-scroll')
     link_to root_path, class: classname do
-      if ENV['PRIMARY_LOGO_URL']
-        image_tag(ENV['PRIMARY_LOGO_URL'])
-      else
-        image_tag(asset_path('logo.png'))
-      end
+      primary_logo
+    end
+  end
+
+  def primary_logo(classname = '')
+    if ENV['PRIMARY_LOGO_URL']
+      image_tag(ENV['PRIMARY_LOGO_URL'], class: classname)
+    else
+      image_tag(asset_path('logo.png'), class: classname)
     end
   end
 

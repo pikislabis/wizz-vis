@@ -32,20 +32,17 @@ body {
       overflow-y: scroll;
     }
 
-    .fs-logo {
+    img.fs-logo {
       display: none;
+      width: 8%;
+      opacity: 0.6;
+      position: fixed;
+      right: 20px;
+      bottom: 15px;
+      z-index: 999;
 
-      img {
-        width: 8%;
-        opacity: 0.6;
-        position: fixed;
-        right: 15px;
-        bottom: 15px;
-        z-index: 999;
-
-        &:hover {
-          opacity: 0;
-        }
+      &:hover {
+        opacity: 0;
       }
     }
   }

@@ -19,6 +19,10 @@ module WizzVis
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
+    Dir["#{Rails.root}/plugins/*/app/assets/**/*"].each do |assets|
+      config.assets.paths << assets
+    end
+
     Dir["#{Rails.root}/config/routes_files/**/*.rb"].each do |route_file|
       config.paths['config/routes.rb'] << route_file
     end
