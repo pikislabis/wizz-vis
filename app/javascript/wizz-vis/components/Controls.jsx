@@ -12,12 +12,16 @@ export default class Controls extends React.Component {
 
   render() {
     return(
-      <div className="dashboard-controls right">
-        <div className="controls-entry col">
+      <div className="dashboard-controls">
+        <div className="controls-entry col flex-5 center">
           <MenuRange id={this.props.dashboard_id} />
         </div>
 
-        <div className="controls-entry col more-vert">
+        <div className="controls-entry col flex-1">
+          <i className="material-icons center-align">insert_chart</i>
+        </div>
+
+        <div className="controls-entry col more-vert flex-1">
           <MenuOptions id={this.props.dashboard_id} />
         </div>
       </div>

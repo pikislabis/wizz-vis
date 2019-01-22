@@ -68,6 +68,7 @@ class MenuRange extends React.Component {
           { startCase(this.props.range) || Time.formatTimeRange(this.props.startTime, this.props.endTime) }
         </div>
         <FloatMenu
+          className="fixed"
           onClose={this.closeMenu}
           open={this.state.menuOpen}>
           <div className="col s12 cont">

@@ -49,10 +49,19 @@ body {
 }
 
 .dashboard-controls {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
   .controls-entry {
     margin: 0;
     padding: 0 0.3rem;
     position: relative;
+    cursor: pointer;
+
+    &:last-child {
+      padding-right: 0px;
+    }
 
     &.more-vert {
       cursor: pointer;

@@ -100,3 +100,30 @@
 .margin-nbl {
   margin-bottom: -$margin_large;
 }
+
+// Flex grow
+.flex-1 {
+  flex-grow: 1;
+}
+
+.flex-2 {
+  flex-grow: 2;
+}
+
+.flex-3 {
+  flex-grow: 3;
+}
+
+.flex-4 {
+  flex-grow: 4;
+}
+
+.flex-5 {
+  flex-grow: 5;
+}
+
+// Material Icons align
+.material-icons.center-align {
+  margin-left: auto;
+  margin-right: auto;
+}
