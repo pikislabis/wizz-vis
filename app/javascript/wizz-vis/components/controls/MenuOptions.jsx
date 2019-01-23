@@ -30,7 +30,7 @@ export default class MenuOptions extends React.Component {
   render() {
     return(
       <div>
-        <i className="material-icons right" onClick={this.openMenu}>more_vert</i>
+        <i className="material-icons right-align" onClick={this.openMenu}>more_vert</i>
         <FloatMenu
           onClose={this.closeMenu}
           open={this.state.menuOpen}>

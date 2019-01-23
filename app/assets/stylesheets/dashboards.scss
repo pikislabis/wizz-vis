@@ -66,6 +66,11 @@ body {
     &.more-vert {
       cursor: pointer;
 
+      .material-icons.right-align {
+        margin-right: 0;
+        margin-left: auto;
+      }
+
       span a {
         display: flex;
         height: 35px;
