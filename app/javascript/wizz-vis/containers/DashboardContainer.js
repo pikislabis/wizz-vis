@@ -20,7 +20,8 @@ DashboardContainer.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    reloadTimestamp: state.reloadTimestamp
+    reloadTimestamp: state.reloadTimestamp,
+    displayWidgetForm: state.displayWidgetForm
     // Component's prop_name: reducer_name set in index file.
   };
 }

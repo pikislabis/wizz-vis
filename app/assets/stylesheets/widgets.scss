@@ -5,3 +5,22 @@
 .recharts-layer.recharts-reference-line {
   font-weight: lighter;
 }
+
+.widget-form-container {
+
+  display: flex;
+  flex-flow: column;
+  height: calc(100vh - 101px);
+
+  .widget-graph {
+    height: 300px;
+  }
+
+  .widget-form {
+    flex-grow: 1;
+
+    li.close_button a {
+      padding: 10px;
+    }
+  }
+}

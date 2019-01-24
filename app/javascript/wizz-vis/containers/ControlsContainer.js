@@ -24,7 +24,8 @@ function mapStateToProps(state) {
     reloadTimestamp: state.reloadTimestamp,
     widgetsRange: state.setRanges.range,
     startTime: state.setRanges.startTime,
-    endTime: state.setRanges.endTime
+    endTime: state.setRanges.endTime,
+    displayWidgetForm: state.displayWidgetForm
     // Component's prop_name: reducer_name set in index file.
   };
 }

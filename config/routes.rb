@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     put :layout, to: 'dashboards#update_layout', on: :member
   end
 
-  resources :datasources, only: :show do
+  resources :datasources, only: [:index, :show] do
     resources :dimensions, param: :name do
       get :values
     end

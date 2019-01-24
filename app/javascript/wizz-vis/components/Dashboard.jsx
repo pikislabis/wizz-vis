@@ -5,6 +5,7 @@ import ReactDOM from "react-dom";
 import request from 'axios';
 import {Responsive, WidthProvider} from 'react-grid-layout';
 import WidgetBase from './WidgetBase';
+import WidgetEditable from './WidgetEditable';
 import Clock from './Clock';
 import reject from 'lodash/reject';
 import PropTypes from 'prop-types';
@@ -93,26 +94,31 @@ export default class Dashboard extends React.Component {
                               </div>);
                     });
 
+    const { displayWidgetForm } = this.props;
+
     return (
     <div ref='dashboard'>
       { this.props.interval ?
           <Clock interval={ this.props.interval } />
           : null
       }
-      <ResponsiveReactGridLayout
-        className={'layout ' + this.props.theme}
-        isDraggable={ this.state.isDraggable }
-        isResizable={ this.state.isDraggable }
-        layouts={layout}
-        rowHeight={ROWHEIGHT}
-        breakpoints={BREAKPOINTS}
-        cols={COLS}
-        draggableHandle=".widget-title"
-        onLayoutChange={ (layout) => this.onLayoutChange(layout) }>
 
-        { widgets }
-
-      </ResponsiveReactGridLayout>
+      {
+        displayWidgetForm ?
+          <WidgetEditable /> :
+          <ResponsiveReactGridLayout
+            className={'layout ' + this.props.theme}
+            isDraggable={ this.state.isDraggable }
+            isResizable={ this.state.isDraggable }
+            layouts={layout}
+            rowHeight={ROWHEIGHT}
+            breakpoints={BREAKPOINTS}
+            cols={COLS}
+            draggableHandle=".widget-title"
+            onLayoutChange={ (layout) => this.onLayoutChange(layout) }>
+            { widgets }
+          </ResponsiveReactGridLayout>
+      }
     </div>
     )
   }

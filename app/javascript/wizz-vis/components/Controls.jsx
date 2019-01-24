@@ -2,12 +2,20 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import MenuRange from './controls/MenuRange';
 import MenuOptions from './controls/MenuOptions';
 
-export default class Controls extends React.Component {
+import * as actions from '../actions/index';
+
+class Controls extends React.Component {
   constructor(props){
     super(props);
+  }
+
+  showWidgetForm = () => {
+    this.props.actions.displayWidgetForm(true);
   }
 
   render() {
@@ -18,7 +26,7 @@ export default class Controls extends React.Component {
         </div>
 
         <div className="controls-entry col flex-1">
-          <i className="material-icons center-align">insert_chart</i>
+          <i onClick={this.showWidgetForm} className="material-icons center-align">insert_chart</i>
         </div>
 
         <div className="controls-entry col more-vert flex-1">
@@ -28,3 +36,19 @@ export default class Controls extends React.Component {
     );
   }
 }
+
+Controls.propTypes = {
+  dashboard_id: PropTypes.number
+}
+
+function mapStateToProps(state) {
+  return {
+    displayWidgetForm: state.displayWidgetForm
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actions, dispatch) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Controls);

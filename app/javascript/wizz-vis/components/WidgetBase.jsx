@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { ResponsiveContainer } from 'recharts';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import cs from 'classnames';
@@ -67,7 +66,8 @@ class WidgetBase extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchData();
+    if(!this.props.editMode)
+      this.fetchData();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -208,6 +208,7 @@ class WidgetBase extends React.Component {
 
 WidgetBase.propTypes = {
   id: PropTypes.number.isRequired,
+  editMode: PropTypes.bool,
   title: PropTypes.string,
   options: PropTypes.object,
   locked: PropTypes.bool.isRequired,
