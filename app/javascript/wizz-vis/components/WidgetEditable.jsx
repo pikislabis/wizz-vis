@@ -4,8 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import request from 'axios';
-
-import { Tabs, Tab } from 'react-materialize';
+import WidgetForm from './widgets/WidgetForm';
 
 import * as actions from '../actions/index';
 import PropTypes from 'prop-types';
@@ -38,25 +37,12 @@ class WidgetEditable extends React.Component {
   }
 
   render () {
-    const close_button = <i onClick={this.hideWidgetForm}
-                            className="material-icons primary-color-text">close</i>;
+    const { datasources } = this.state;
 
     return (
       <div className="widget-form-container">
         <div className="widget-graph">WidgetGraph</div>
-        <div className="widget-form">
-          <div className="row">
-            <div className="col s12">
-              <Tabs>
-                <Tab title="General" active>General</Tab>
-                <Tab title="Metrics">Metrics</Tab>
-                <Tab title="Options">Options</Tab>
-                <Tab title="Range">Range</Tab>
-                <Tab title={close_button} className="close_button right" />
-              </Tabs>
-            </div>
-          </div>
-        </div>
+        <WidgetForm onClose={this.hideWidgetForm} datasources={datasources} />
       </div>
     );
   }

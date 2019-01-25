@@ -13,7 +13,7 @@
   height: calc(100vh - 101px);
 
   .widget-graph {
-    height: 300px;
+    min-height: 300px;
   }
 
   .widget-form {
@@ -21,6 +21,14 @@
 
     li.close_button a {
       padding: 10px;
+    }
+
+    // Override css for outlined inputs
+    input[type=text]:not(.browser-default) {
+      margin: 0;
+      border-bottom: none;
+      box-shadow: none;
+      padding: 0 14px;
     }
   }
 }
