@@ -9,6 +9,9 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import GeneralTab from './forms/GeneralTab';
+import MetricsTab from './forms/MetricsTab';
+import OptionsTab from './forms/OptionsTab';
+import RangeTab from './forms/RangeTab';
 
 function TabContainer(props) {
   return (
@@ -63,10 +66,10 @@ export default class WidgetForm extends React.Component {
                 </section>
               </Tabs>
             </AppBar>
-            {selected_tab === 0 && <TabContainer><GeneralTab datasources={datasources} /></TabContainer>}
-            {selected_tab === 1 && <TabContainer>Metrics</TabContainer>}
-            {selected_tab === 2 && <TabContainer>Options</TabContainer>}
-            {selected_tab === 3 && <TabContainer>Range</TabContainer>}
+            {selected_tab === 0 && <TabContainer><GeneralTab /></TabContainer>}
+            {selected_tab === 1 && <TabContainer><MetricsTab datasources={datasources} /></TabContainer>}
+            {selected_tab === 2 && <TabContainer><OptionsTab /></TabContainer>}
+            {selected_tab === 3 && <TabContainer><RangeTab /></TabContainer>}
           </div>
         </div>
       </div>

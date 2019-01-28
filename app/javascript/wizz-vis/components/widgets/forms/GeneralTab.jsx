@@ -93,8 +93,7 @@ class GeneralTab extends React.Component {
 }
 
 GeneralTab.propTypes = {
-  classes: PropTypes.object.isRequired,
-  datasources: PropTypes.arrayOf(PropTypes.object)
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(GeneralTab);
