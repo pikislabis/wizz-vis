@@ -71,7 +71,7 @@ class MenuRange extends React.Component {
           className="fixed"
           onClose={this.closeMenu}
           open={this.state.menuOpen}>
-          <div className="col s12 cont">
+          <div className="range-selector">
             <div className="button-group">
               <ul className="group-container">
                 <li className={"group-member " + (this.state.menuType == 'relative' ? 'primary-color' : '')}
