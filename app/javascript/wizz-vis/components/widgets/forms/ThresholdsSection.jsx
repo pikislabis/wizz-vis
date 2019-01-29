@@ -41,7 +41,7 @@ class ThresholdsSection extends React.Component {
             name='color'
             defaultValue='#000'
             TextFieldProps={
-              {label: "Color", variant: "outlined", margin: "dense"}
+              {label: "Color", variant: "outlined", margin: "dense", fullWidth: true}
             }
           />
         </Paper>

@@ -25,7 +25,7 @@ class OptionsTab extends React.Component {
         name='color'
         defaultValue='#000'
         TextFieldProps={
-          {label: "Main Color", variant: "outlined", margin: "dense"}
+          {label: "Main Color", variant: "outlined", margin: "dense", fullWidth: true}
         }
       />
     )

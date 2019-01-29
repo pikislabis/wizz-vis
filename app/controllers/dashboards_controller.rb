@@ -96,7 +96,23 @@ class DashboardsController < ApplicationController
       setFilters: {
         filters: ActiveModelSerializers::SerializableResource.new(@dashboard.filters).as_json
       },
-      displayWidgetForm: false
+      displayWidgetForm: false,
+      widgetFields: widget_store
+    }
+  end
+
+  def widget_store
+    {
+      type: nil,
+      title: '',
+      granularity: nil,
+      limit: nil,
+      datasource_name: nil,
+      dimensions: [],
+      aggregators: [],
+      post_aggregators: [],
+      filters: [],
+      options: {}
     }
   end
 

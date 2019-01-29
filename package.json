@@ -12,6 +12,7 @@
     "classnames": "^2.2.5",
     "d3": "^5.7.0",
     "d3-interpolate": "^1.2.0",
+    "downshift": "^3.2.0",
     "echarts": "^4.0.4",
     "echarts-for-react": "^2.0.8",
     "es6-promise": "^4.2.5",

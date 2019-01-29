@@ -22,7 +22,12 @@ class OutlinedSelect extends React.Component {
   }
 
   handleChange = (event) => {
+    const { onChange } = this.props;
+
     this.setState({selected: event.target.value})
+
+    if (onChange !== undefined)
+      onChange(event.target.value);
   }
 
   menuItems = () => {
@@ -39,7 +44,6 @@ class OutlinedSelect extends React.Component {
 
     return (
       <TextField
-        id="outlined-select-currency"
         select
         label={label}
         variant="outlined"
@@ -60,6 +64,7 @@ class OutlinedSelect extends React.Component {
 }
 
 OutlinedSelect.propTypes = {
+  onChange: PropTypes.func,
   selected: PropTypes.string,
   label: PropTypes.string,
   values: PropTypes.arrayOf(PropTypes.shape({

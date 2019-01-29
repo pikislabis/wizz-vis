@@ -2,12 +2,16 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import OutlinedSelect from '../../OutlinedSelect';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+
+import * as actions from '../../../actions/index';
 
 const styles = theme => ({
   paper: {
@@ -38,8 +42,12 @@ class GeneralTab extends React.Component {
     ]
   }
 
+  fieldOnChange = (field, value) => {
+    this.props.actions.setField(field, value);
+  }
+
   render () {
-    const { classes } = this.props;
+    const { classes, type, title } = this.props;
 
     return (
       <Grid container spacing={16}>
@@ -47,14 +55,18 @@ class GeneralTab extends React.Component {
           <Paper className={classes.paper} elevation={1}>
             <Typography variant="title">Info</Typography>
             <OutlinedSelect
+              selected={type}
               label="Type"
               values={this.widgetTypesValues()}
+              onChange={(value) => this.fieldOnChange('type', value)}
             />
             <TextField
               label="Title"
+              value={title}
               variant="outlined"
               fullWidth={true}
               margin="dense"
+              onChange={(event) => this.fieldOnChange('title', event.target.value)}
             />
             <TextField
               label="Description"
@@ -96,4 +108,15 @@ GeneralTab.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(GeneralTab);
+function mapStateToProps(state) {
+  return {
+    type: state.widgetFields.type,
+    title: state.widgetFields.title,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actions, dispatch) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(GeneralTab));

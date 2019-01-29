@@ -6,8 +6,10 @@ import { withStyles } from '@material-ui/core/styles';
 import OutlinedSelect from '../../OutlinedSelect';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import OutlinedTextField from '../../OutlinedTextField';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+import DownshiftMultiple from '../../DownshiftMultiple';
 
 const styles = theme => ({
   paper: {
@@ -18,6 +20,24 @@ const styles = theme => ({
 });
 
 class MetricsTab extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      selectedDatasource: null
+    };
+  }
+
+  getDatasource = datasource_name => {
+    const { datasources } = this.props;
+
+    return datasources.find(d => (
+      d.name == datasource_name
+    ));
+  }
+
+  onChangeDatasource = selectedDatasource => {
+    this.setState({ selectedDatasource });
+  }
 
   datasourceValues = () => {
     const { datasources } = this.props;
@@ -29,23 +49,33 @@ class MetricsTab extends React.Component {
 
   showDimensionField = () => {
     const { graphType } = this.props;
+    const { selectedDatasource } = this.state;
 
-    return <TextField
-      label="Dimension"
-      variant="outlined"
-      fullWidth={true}
-      margin="dense"
+    if(selectedDatasource == null)
+      return <OutlinedTextField label="Dimensions" disabled />;
+
+    const dimensions =
+      this.getDatasource(selectedDatasource).dimensions.map(d => (d.name));
+
+    return <DownshiftMultiple
+      label="Dimensions"
+      suggestions={dimensions}
     />
   }
 
   showAggregatorField = () => {
     const { graphType } = this.props;
+    const { selectedDatasource } = this.state;
 
-    return <TextField
-      label="Aggregator"
-      variant="outlined"
-      fullWidth={true}
-      margin="dense"
+    if(selectedDatasource == null)
+      return <OutlinedTextField label="Aggregators" disabled />;
+
+    const aggregators =
+      this.getDatasource(selectedDatasource).aggregators.map(a => (a.name));
+
+    return <DownshiftMultiple
+      label="Aggregators"
+      suggestions={aggregators}
     />
   }
 
@@ -98,6 +128,7 @@ class MetricsTab extends React.Component {
             <OutlinedSelect
               label="Datasource"
               values={this.datasourceValues()}
+              onChange={this.onChangeDatasource}
             />
           { this.showDimensionField() }
           { this.showAggregatorField() }
