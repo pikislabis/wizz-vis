@@ -115,7 +115,7 @@ export default class WidgetHeatmap extends React.Component {
   }
 
   render () {
-    const cssClass = cs({ 'widget-error': this.state.error });
+    const cssClass = cs({ 'widget-error': this.props.error });
 
     const data = this.transformData(this.props.data);
 
