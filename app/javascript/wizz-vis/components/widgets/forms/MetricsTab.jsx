@@ -2,6 +2,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import OutlinedSelect from '../../OutlinedSelect';
 import Grid from '@material-ui/core/Grid';
@@ -10,6 +12,8 @@ import OutlinedTextField from '../../OutlinedTextField';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import DownshiftMultiple from '../../DownshiftMultiple';
+
+import * as actions from '../../../actions/index';
 
 const styles = theme => ({
   paper: {
@@ -20,11 +24,9 @@ const styles = theme => ({
 });
 
 class MetricsTab extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      selectedDatasource: null
-    };
+
+  fieldOnChange = (field, value) => {
+    this.props.actions.setField(field, value);
   }
 
   getDatasource = datasource_name => {
@@ -33,10 +35,6 @@ class MetricsTab extends React.Component {
     return datasources.find(d => (
       d.name == datasource_name
     ));
-  }
-
-  onChangeDatasource = selectedDatasource => {
-    this.setState({ selectedDatasource });
   }
 
   datasourceValues = () => {
@@ -48,34 +46,40 @@ class MetricsTab extends React.Component {
   }
 
   showDimensionField = () => {
-    const { graphType } = this.props;
-    const { selectedDatasource } = this.state;
+    const { graphType, datasource_name } = this.props;
 
-    if(selectedDatasource == null)
+    if(datasource_name == null)
       return <OutlinedTextField label="Dimensions" disabled />;
 
+    const selected_dimensions = this.props.dimensions;
+
     const dimensions =
-      this.getDatasource(selectedDatasource).dimensions.map(d => (d.name));
+      this.getDatasource(datasource_name).dimensions.map(d => (d.name));
 
     return <DownshiftMultiple
       label="Dimensions"
+      selected={selected_dimensions}
       suggestions={dimensions}
+      onChange={(value) => this.fieldOnChange('dimensions', value)}
     />
   }
 
   showAggregatorField = () => {
-    const { graphType } = this.props;
-    const { selectedDatasource } = this.state;
+    const { graphType, datasource_name } = this.props;
 
-    if(selectedDatasource == null)
+    if(datasource_name == null)
       return <OutlinedTextField label="Aggregators" disabled />;
 
+    const selected_aggregators = this.props.aggregators;
+
     const aggregators =
-      this.getDatasource(selectedDatasource).aggregators.map(a => (a.name));
+      this.getDatasource(datasource_name).aggregators.map(a => (a.name));
 
     return <DownshiftMultiple
       label="Aggregators"
+      selected={selected_aggregators}
       suggestions={aggregators}
+      onChange={(value) => this.fieldOnChange('aggregators', value)}
     />
   }
 
@@ -118,7 +122,7 @@ class MetricsTab extends React.Component {
   }
 
   render () {
-    const { classes } = this.props;
+    const { classes, datasource_name } = this.props;
 
     return (
       <Grid container spacing={8}>
@@ -126,9 +130,10 @@ class MetricsTab extends React.Component {
           <Paper className={classes.paper} elevation={1}>
             <Typography variant="title">General</Typography>
             <OutlinedSelect
+              selected={datasource_name}
               label="Datasource"
               values={this.datasourceValues()}
-              onChange={this.onChangeDatasource}
+              onChange={(value) => this.fieldOnChange('datasource_name', value)}
             />
           { this.showDimensionField() }
           { this.showAggregatorField() }
@@ -195,4 +200,16 @@ MetricsTab.propTypes = {
   datasources: PropTypes.arrayOf(PropTypes.object)
 };
 
-export default withStyles(styles)(MetricsTab);
+function mapStateToProps(state) {
+  return {
+    datasource_name: state.widgetFields.datasource_name,
+    dimensions: state.widgetFields.dimensions,
+    aggregators: state.widgetFields.aggregators,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actions, dispatch) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(MetricsTab));

@@ -105,7 +105,9 @@ class GeneralTab extends React.Component {
 }
 
 GeneralTab.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  type: PropTypes.string,
+  title: PropTypes.string
 };
 
 function mapStateToProps(state) {

@@ -80,7 +80,7 @@ const styles = theme => ({
     flexWrap: 'wrap',
   },
   inputInput: {
-    width: 'auto',
+    width: 'auto !important',
     flexGrow: 1,
   },
   divider: {
@@ -94,7 +94,7 @@ class DownshiftMultiple extends React.Component {
 
     this.state = {
       inputValue: '',
-      selectedItem: [],
+      selectedItem: this.props.selected || [],
     };
   }
 
@@ -117,24 +117,33 @@ class DownshiftMultiple extends React.Component {
   };
 
   handleChange = item => {
-    let { selectedItem } = this.state;
+    //let { selectedItem } = this.state;
+    let { selected } = this.props;
+    const { onChange } = this.props;
 
-    if (selectedItem.indexOf(item) === -1) {
-      selectedItem = [...selectedItem, item];
+    if (selected.indexOf(item) === -1) {
+      selected = [...selected, item];
     }
+
+    onChange(selected);
 
     this.setState({
       inputValue: '',
-      selectedItem,
+    //   selectedItem,
     });
   };
 
   handleDelete = item => () => {
-    this.setState(state => {
-      const selectedItem = [...state.selectedItem];
-      selectedItem.splice(selectedItem.indexOf(item), 1);
-      return { selectedItem };
-    });
+    //let { selectedItem } = this.state;
+    let { selected } = this.props;
+    const { onChange } = this.props;
+
+    selected.splice(selected.indexOf(item), 1);
+    onChange(selected);
+
+    // this.setState({
+    //   selectedItem
+    // });
   };
 
   getSuggestions = value => {
@@ -158,7 +167,7 @@ class DownshiftMultiple extends React.Component {
   }
 
   render() {
-    const { classes, label } = this.props;
+    const { selected, classes, label } = this.props;
     const { inputValue, selectedItem } = this.state;
 
     return (
@@ -166,7 +175,7 @@ class DownshiftMultiple extends React.Component {
         id="downshift-multiple"
         inputValue={inputValue}
         onChange={this.handleChange}
-        selectedItem={selectedItem}
+        selectedItem={selected}
       >
         {({
           getInputProps,
@@ -181,7 +190,7 @@ class DownshiftMultiple extends React.Component {
               fullWidth: true,
               classes,
               InputProps: getInputProps({
-                startAdornment: selectedItem.map(item => (
+                startAdornment: selected.map(item => (
                   <Chip
                     key={item}
                     tabIndex={-1}
@@ -216,9 +225,15 @@ class DownshiftMultiple extends React.Component {
 }
 
 DownshiftMultiple.propTypes = {
+  selected: PropTypes.arrayOf(PropTypes.string),
   label: PropTypes.string,
   suggestions: PropTypes.arrayOf(PropTypes.string),
   classes: PropTypes.object.isRequired,
+  onChange: PropTypes.func
 };
+
+DownshiftMultiple.defaultProps = {
+  selected: []
+}
 
 export default withStyles(styles)(DownshiftMultiple);
