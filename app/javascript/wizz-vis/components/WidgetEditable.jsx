@@ -49,6 +49,7 @@ class WidgetEditable extends React.Component {
   submitWidget = () => {
     let { widgetFields } = this.props;
     const { dashboardId } = this.props;
+    const { addWidget }  = this.props.actions;
 
     widgetFields = this.normalize_fields(widgetFields);
 
@@ -67,7 +68,8 @@ class WidgetEditable extends React.Component {
           }
         })
     })
-    .then(widget => this.hideWidgetForm())
+    .then(r => r.json().then(widget => (addWidget(widget))))
+    .then(() => this.hideWidgetForm())
     .catch(error => console.error(error))
 
   }

@@ -22,7 +22,7 @@ function mapStateToProps(state) {
   return {
     reloadTimestamp: state.reloadTimestamp,
     displayWidgetForm: state.displayWidgetForm,
-    widgetFields: state.widgetFields,
+    widgets: state.widgets,
     // Component's prop_name: reducer_name set in index file.
   };
 }

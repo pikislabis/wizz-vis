@@ -3,6 +3,7 @@
 import reloadReducer from './reload';
 import rangesReducer from './range';
 import filtersReducer from './filter';
+import widgetsReducer from './widgets';
 import widgetFormDisplayReducer from './widget_form_display';
 import widgetFormFieldsReducer from './widget_form_fields';
 
@@ -12,6 +13,7 @@ export default {
   reloadTimestamp: reloadReducer,
   setRanges: rangesReducer,
   setFilters: filtersReducer,
+  widgets: widgetsReducer,
   displayWidgetForm: widgetFormDisplayReducer,
   widgetFields: widgetFormFieldsReducer
 };

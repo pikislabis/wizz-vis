@@ -58,7 +58,7 @@ class WidgetBase extends React.Component {
     super(props);
 
     this.state = {
-      $$data: [],
+      data: [],
       attributes: {},
       error: null,
       reloadTimestamp: null
@@ -102,10 +102,10 @@ class WidgetBase extends React.Component {
         })
         .then(response => Errors.handleErrors(response))
         .then(widget => {
-          if(widget.data && JSON.stringify(widget.data) !== JSON.stringify(this.state.$$data) ||
+          if(widget.data && JSON.stringify(widget.data) !== JSON.stringify(this.state.data) ||
             JSON.stringify(widget.attributes) !== JSON.stringify(this.state.attributes)) {
             this.setState({
-              $$data: widget.data,
+              data: widget.data,
               attributes: widget.attributes,
               error: null
             });
@@ -116,7 +116,7 @@ class WidgetBase extends React.Component {
           const message = error.response.data.error;
           button.removeClass('active');
           if(message !== this.state.error) {
-            this.setState({ $$data: [], error: message });
+            this.setState({ data: [], error: message });
           }
         })
     );
@@ -196,7 +196,7 @@ class WidgetBase extends React.Component {
           }
           <ErrorBoundary>
             <Type {...this.props} {...this.state.attributes}
-              data={this.state.$$data} error={this.state.error}
+              data={this.state.data} error={this.state.error}
               height={this.contentHeight()}
               width={this.contentWidth()} />
           </ErrorBoundary>
