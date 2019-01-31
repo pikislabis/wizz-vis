@@ -24,6 +24,17 @@ RSpec.describe Widget, type: :model do
     it_behaves_like 'intervalable'
   end
 
+  describe 'defaults' do
+    let(:widget) { build(:widget) }
+
+    it 'has default values' do
+      expect(widget.col).to eq(0)
+      expect(widget.row).to eq(0)
+      expect(widget.size_x).to eq(4)
+      expect(widget.size_y).to eq(4)
+    end
+  end
+
   describe '#filters' do
     context 'when no inherited filters' do
       let(:filter_1) { create(:widget_filter, operator: 'eq', value: 'value_1') }

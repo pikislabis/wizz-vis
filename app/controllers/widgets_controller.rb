@@ -89,7 +89,7 @@ class WidgetsController < ApplicationController
       aggregators: [:aggregator, :aggregator_name],
       filters: %i[dimension_id operator value]
     ).tap do |attr|
-      attr[:datasource_id] = Datasource.find_by(name: params[:widget][:datasource_name]).id
+      attr[:datasource_id] = Datasource.find_by(name: params[:widget][:datasource_name]).id if params[:widget][:datasource_name]
     end
   end
 
