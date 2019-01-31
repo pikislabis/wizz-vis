@@ -27,6 +27,11 @@ class Widget < ApplicationRecord
   validates :row, :col, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :size_x, :size_y, numericality: { only_integer: true, greater_than: 0 }
 
+  # ==========================================================
+  # Callbacks
+  # ==========================================================
+  after_initialize :set_defaults
+
   def range
     override_interval? ? super : options&.[]('range')
   end
@@ -106,6 +111,13 @@ class Widget < ApplicationRecord
   end
 
   private
+
+  def set_defaults
+    self.row    ||= 0
+    self.col    ||= 0
+    self.size_x ||= 4
+    self.size_y ||= 4
+  end
 
   def compare_data
     intervals.map do |i|

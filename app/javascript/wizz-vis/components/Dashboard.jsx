@@ -21,7 +21,7 @@ export default class Dashboard extends React.Component {
     super(props);
 
     this.state = {
-      $$widgets: [],
+      widgets: [],
       layout: null,
       fetchWidgetsError: null,
       updateLayoutError: null
@@ -40,7 +40,7 @@ export default class Dashboard extends React.Component {
       request
         .get('/dashboards/' + this.props.id + '/widgets.json', { responseType: 'json' })
         .then(res => this.setState({
-          $$widgets: res.data,
+          widgets: res.data,
           layout: res.data.map((w) => {
             return { i: w.id.toString(), x: w.col, y: w.row, w: w.size_x, h: w.size_y };
           })
@@ -76,7 +76,7 @@ export default class Dashboard extends React.Component {
 
   removeItem (widget_id) {
     this.setState({
-      $$widgets: reject(this.state.$$widgets, { id: widget_id }),
+      widgets: reject(this.state.widgets, { id: widget_id }),
       layout: reject(this.state.layout, { i: widget_id.toString() })
     });
   }
@@ -85,7 +85,7 @@ export default class Dashboard extends React.Component {
     // layout is an array of objects, see the demo for more complete usage
     const layout = { lg: (this.state.layout || []) };
 
-    const widgets = this.state.$$widgets.map((w, index) => {
+    const widgets = this.state.widgets.map((w, index) => {
                       return (<div key={ w.id }>
                                 <WidgetBase {...w}
                                 locked={this.props.locked}
@@ -105,7 +105,7 @@ export default class Dashboard extends React.Component {
 
       {
         displayWidgetForm ?
-          <WidgetEditable /> :
+          <WidgetEditable dashboardId={this.props.id} /> :
           <ResponsiveReactGridLayout
             className={'layout ' + this.props.theme}
             isDraggable={ this.state.isDraggable }
