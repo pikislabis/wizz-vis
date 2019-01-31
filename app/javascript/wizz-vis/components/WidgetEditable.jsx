@@ -69,10 +69,8 @@ class WidgetEditable extends React.Component {
         })
     })
     .then(r => r.json().then(widget => (addWidget(widget))))
-    .then(() => {
-      this.hideWidgetForm();
-      clearFields();
-    })
+    .then(() => this.hideWidgetForm())
+    .then(() => clearFields())
     .catch(error => console.error(error))
 
   }

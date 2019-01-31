@@ -23,7 +23,7 @@ export default function widgetFormFieldsReducer(state = initialState, action) {
         [field]: value
       });
     case CLEAR_WIDGET_FIELDS:
-      return {};
+      return initialState;
     default:
       return state;
   }
