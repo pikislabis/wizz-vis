@@ -1,8 +1,19 @@
 /* jshint esversion: 6 */
 
-import { SET_WIDGET_FIELD } from '../constants';
+import { SET_WIDGET_FIELD, CLEAR_WIDGET_FIELDS } from '../constants';
 
-const initialState = null;
+const initialState = {
+    type: null,
+    title: '',
+    granularity: null,
+    limit: 5,
+    datasource_name: null,
+    dimensions: [],
+    aggregators: [],
+    post_aggregators: [],
+    filters: [],
+    options: {}
+};
 
 export default function widgetFormFieldsReducer(state = initialState, action) {
   const { type, field, value } = action;
@@ -11,6 +22,8 @@ export default function widgetFormFieldsReducer(state = initialState, action) {
       return Object.assign({}, state, {
         [field]: value
       });
+    case CLEAR_WIDGET_FIELDS:
+      return {};
     default:
       return state;
   }

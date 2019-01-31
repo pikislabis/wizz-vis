@@ -91,6 +91,8 @@ class MetricsTab extends React.Component {
       variant="outlined"
       fullWidth={true}
       margin="dense"
+      value={this.props.granularity}
+      onChange={(event) => this.fieldOnChange('granularity', event.target.value)}
     />
   }
 
@@ -102,6 +104,8 @@ class MetricsTab extends React.Component {
       variant="outlined"
       fullWidth={true}
       margin="dense"
+      value={this.props.limit}
+      onChange={(event) => this.fieldOnChange('limit', event.target.value)}
     />
   }
 
@@ -205,6 +209,8 @@ function mapStateToProps(state) {
     datasource_name: state.widgetFields.datasource_name,
     dimensions: state.widgetFields.dimensions,
     aggregators: state.widgetFields.aggregators,
+    granularity: state.widgetFields.granularity,
+    limit: state.widgetFields.limit
   };
 }
 

@@ -87,7 +87,6 @@ class DashboardsController < ApplicationController
   def default_store
     default = 'last_1_hour' if @dashboard.range.nil? && @dashboard.start_time.nil?
     {
-      reloadTimestamp: nil,
       setRanges: {
         range: @dashboard.range || default,
         startTime: @dashboard.start_time,
@@ -95,24 +94,7 @@ class DashboardsController < ApplicationController
       },
       setFilters: {
         filters: ActiveModelSerializers::SerializableResource.new(@dashboard.filters).as_json
-      },
-      displayWidgetForm: false,
-      widgetFields: widget_store
-    }
-  end
-
-  def widget_store
-    {
-      type: nil,
-      title: '',
-      granularity: nil,
-      limit: nil,
-      datasource_name: nil,
-      dimensions: [],
-      aggregators: [],
-      post_aggregators: [],
-      filters: [],
-      options: {}
+      }
     }
   end
 

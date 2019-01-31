@@ -2,7 +2,7 @@
 
 import { SET_DISPLAY_WIDGET_FORM } from '../constants';
 
-const initialState = null;
+const initialState = false;
 
 export default function widgetFormDisplayReducer(state = initialState, action) {
   const { type, value } = action;

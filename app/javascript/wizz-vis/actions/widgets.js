@@ -13,5 +13,5 @@ export function addWidget(value) {
   return {
     type: ADD_WIDGET,
     value
-  }
+  };
 }
