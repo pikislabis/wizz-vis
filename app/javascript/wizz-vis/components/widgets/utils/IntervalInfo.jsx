@@ -1,6 +1,7 @@
 /* jshint esversion: 6 */
 
 import React from 'react';
+import ReactTooltip from 'react-tooltip';
 import PropTypes from 'prop-types';
 import Time from './../../../utils/time';
 import startCase from 'lodash/startCase';
@@ -16,7 +17,11 @@ export default class IntervalInfo extends React.Component {
   render () {
     return (
       <div className="primary-color-text interval_info">
-        { this.interval_text }
+        <i className="material-icons" data-tip data-for='interval-tip'>watch_later_outline</i>
+        <ReactTooltip id='interval-tip' delayHide={200} delayShow={300}
+          delayUpdate={200} effect="solid">
+            <p data-tip>{ this.interval_text }</p>
+        </ReactTooltip>
       </div>
     )
   }
