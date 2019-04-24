@@ -1,6 +1,7 @@
 GIT
   remote: https://github.com/wizzie-io/ruby-druid.git
-  revision: b3c204daa2420cd9ad3843335c0af566a3a9ec74
+  revision: fa6c762c9b5ef7c8541787504406e6a062325d0f
+  tag: v0.11.0
   specs:
     ruby-druid (0.10.1)
       activemodel (>= 3.0.0)
@@ -177,7 +178,7 @@ GEM
     method_source (0.9.2)
     mime-types (3.2.2)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2018.0812)
+    mime-types-data (3.2019.0331)
     mimemagic (0.3.3)
     mini_mime (1.0.1)
     mini_portile2 (2.4.0)

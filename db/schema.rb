@@ -78,20 +78,6 @@ ActiveRecord::Schema.define(version: 2018_10_08_100636) do
     t.index ["filterable_id", "filterable_type"], name: "index_filters_on_filterable_id_and_filterable_type"
   end
 
-  create_table "organizations", force: :cascade do |t|
-    t.string "name"
-    t.uuid "consumer_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "organizations_users", id: false, force: :cascade do |t|
-    t.bigint "organization_id", null: false
-    t.bigint "user_id", null: false
-    t.index ["organization_id", "user_id"], name: "index_organizations_users_on_organization_id_and_user_id"
-    t.index ["user_id", "organization_id"], name: "index_organizations_users_on_user_id_and_organization_id"
-  end
-
   create_table "post_aggregators", force: :cascade do |t|
     t.string "output_name"
     t.string "operator"
@@ -102,17 +88,6 @@ ActiveRecord::Schema.define(version: 2018_10_08_100636) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["widget_id"], name: "index_post_aggregators_on_widget_id"
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.integer "doorkeeper_uid"
-    t.string "doorkeeper_access_token"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "name"
-    t.boolean "admin", default: false
-    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
   create_table "widgets", force: :cascade do |t|
