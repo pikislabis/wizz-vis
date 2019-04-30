@@ -17,10 +17,10 @@ module ApplicationHelper
   end
 
   def primary_logo(classname = '')
-    if ENV['PRIMARY_LOGO_URL']
-      image_tag(ENV['PRIMARY_LOGO_URL'], class: classname)
-    else
+    if ENV['PRIMARY_LOGO_URL'].nil? or ENV['PRIMARY_LOGO_URL'].strip.empty?
       image_tag(asset_path('logo.png'), class: classname)
+    else
+      image_tag(ENV['PRIMARY_LOGO_URL'], class: classname)
     end
   end
 
