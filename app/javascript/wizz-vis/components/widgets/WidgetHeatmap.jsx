@@ -6,6 +6,7 @@ import HeatmapLayer from 'react-leaflet-heatmap-layer';
 import { isMobile } from 'react-device-detect';
 import cs from 'classnames';
 import Theme from './../../utils/theme';
+import Time from './../../utils/time';
 import Info from './utils/Info';
 import LegendControl from './utils/Legend';
 import get from 'lodash/get';
@@ -25,6 +26,36 @@ export default class WidgetHeatmap extends React.Component {
   componentDidMount() {
     this.setCoordinateDimension();
     this.setAggregator();
+
+    this.handleToUpdate();
+  }
+
+  handleToUpdate = () => {
+    if (!this.playMode) {
+      return;
+    }
+
+    let startTime, endTime;
+
+    if (this.props.originalRange) {
+      [startTime, endTime] = Time.rangeToDateTimes(this.props.originalRange);
+    } else {
+      startTime = Time.moment(this.props.originalStartTime);
+      endTime   = Time.moment(this.props.originalEndTime);
+    }
+
+    this.executePlayMode(startTime, endTime);
+  }
+
+  executePlayMode = (startTime, endTime) => {
+    setTimeout(() => {
+      this.props.handleToUpdate(
+        startTime.toISOString(),
+        startTime.add(1, 'minute').toISOString()
+      );
+      if (startTime.isBefore(endTime))
+        this.executePlayMode(startTime, endTime);
+    }, 1000);
   }
 
   componentDidUpdate(prevProps) {
@@ -106,6 +137,11 @@ export default class WidgetHeatmap extends React.Component {
     return get(this.props, 'options.gradient') || gradient;
   }
 
+  playMode() {
+    const playMode = get(this.props, 'options.playMode');
+    return playMode == undefined ? false : playMode;
+  }
+
   showLegend(data_length) {
     if (data_length == 0)
       return false;
@@ -174,6 +210,8 @@ WidgetHeatmap.propTypes = {
     max: PropTypes.string,
     maxZoom: PropTypes.number,
     blur: PropTypes.number,
-    radius: PropTypes.number
-  })
+    radius: PropTypes.number,
+    playMode: PropTypes.bool
+  }),
+  handleToUpdate: PropTypes.func
 };

@@ -103,6 +103,22 @@ export default {
     return moment(time_2).diff(moment(time_1));
   },
 
+  rangeToDateTimes(range) {
+    const newDate = new Date;
+    let m;
+
+    if (range.match(/last/)) {
+      m = /last_(\d+)_(\w+)/.exec(range);
+      return [moment().add(m[1], m[2]), moment()];
+    } else if (range.match(/current/)) {
+      m = /current_(\w+)/.exec(range);
+      return [moment().startOf(m[1]), moment().endOf(m[1])];
+    } else if (range.match(/previous/)) {
+      m = /previous_(\w+)/.exec(range);
+      return [moment().add(-1, m[1]).startOf(m[1]), moment().add(-1, m[1]).endOf(m[1])];
+    }
+  },
+
   /**
    * Return the difference in the format %d hr %d min between
    * two datetime passed as arguments.
