@@ -109,7 +109,7 @@ export default {
 
     if (range.match(/last/)) {
       m = /last_(\d+)_(\w+)/.exec(range);
-      return [moment().add(m[1], m[2]), moment()];
+      return [moment().add(parseInt(m[1]) * -1, m[2]), moment()];
     } else if (range.match(/current/)) {
       m = /current_(\w+)/.exec(range);
       return [moment().startOf(m[1]), moment().endOf(m[1])];

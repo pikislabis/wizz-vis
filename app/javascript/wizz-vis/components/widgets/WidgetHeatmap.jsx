@@ -17,6 +17,8 @@ export default class WidgetHeatmap extends React.Component {
   constructor(props) {
     super(props);
 
+    this.timer = null;
+
     this.state = {
       aggregator: '',
       coordinate_dimension: ''
@@ -48,7 +50,7 @@ export default class WidgetHeatmap extends React.Component {
   }
 
   executePlayMode = (startTime, endTime) => {
-    setTimeout(() => {
+    this.timer = setTimeout(() => {
       this.props.handleToUpdate(
         startTime.toISOString(),
         startTime.add(1, 'minute').toISOString()
@@ -61,9 +63,26 @@ export default class WidgetHeatmap extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.aggregators !== this.props.aggregators ||
       prevProps.dimensions !== this.props.dimensions ||
-      prevProps.options.metrics !== this.props.options.metrics){
+      prevProps.options.metrics !== this.props.options.metrics ||
+      prevProps.reloadTimestamp !== this.props.reloadTimestamp){
       this.setCoordinateDimension();
       this.setAggregator();
+    }
+
+    if(prevProps.originalRange !== this.props.originalRange ||
+      prevProps.originalStartTime !== this.props.originalStartTime ||
+      prevProps.originalEndTime !== this.props.originalEndTime ||
+      prevProps.reloadTimestamp !== this.props.reloadTimestamp) {
+      if (this.timer) {
+        clearTimeout(this.timer);
+      }
+      this.handleToUpdate();
+    }
+  }
+
+  componentWillUnmount() {
+    if(this.timer){
+        clearTimeout(this.timer);
     }
   }
 

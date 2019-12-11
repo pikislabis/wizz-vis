@@ -210,6 +210,7 @@ class WidgetBase extends React.Component {
               originalRange={this.props.range}
               originalStartTime={this.props.startTime}
               originalEndTime={this.props.endTime}
+              reloadTimestamp={this.props.reloadTimestamp}
               handleToUpdate={this.handleToUpdate}/>
           </ErrorBoundary>
         </div>
