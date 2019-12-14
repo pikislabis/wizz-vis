@@ -282,6 +282,11 @@ WidgetPlaneLocation.propTypes = {
   options: PropTypes.shape({
     ...common.PLANE,
     threshold_metric: PropTypes.string,
-    thresholds: PropTypes.arrayOf(PropTypes.array)
-  })
+    thresholds: PropTypes.arrayOf(PropTypes.array),
+    playMode: PropTypes.object
+  }),
+  handleToUpdate: PropTypes.func,
+  originalRange: PropTypes.string,
+  originalStartTime: PropTypes.string,
+  originalEndTime: PropTypes.string
 };

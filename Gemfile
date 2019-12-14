@@ -63,7 +63,7 @@ gem 'kaminari', '~> 1.1'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-gem 'mini_racer', platforms: :ruby
+gem 'mini_racer', '~> 0.2.5', platforms: :ruby
 
 gem 'swagger-blocks'
 

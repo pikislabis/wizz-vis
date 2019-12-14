@@ -6,7 +6,6 @@ import HeatmapLayer from 'react-leaflet-heatmap-layer';
 import { isMobile } from 'react-device-detect';
 import cs from 'classnames';
 import Theme from './../../utils/theme';
-import Time from './../../utils/time';
 import Info from './utils/Info';
 import LegendControl from './utils/Legend';
 import get from 'lodash/get';
@@ -31,8 +30,7 @@ export default class WidgetHeatmap extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.aggregators !== this.props.aggregators ||
       prevProps.dimensions !== this.props.dimensions ||
-      prevProps.options.metrics !== this.props.options.metrics ||
-      prevProps.reloadTimestamp !== this.props.reloadTimestamp){
+      prevProps.options.metrics !== this.props.options.metrics){
       this.setCoordinateDimension();
       this.setAggregator();
     }
@@ -176,8 +174,6 @@ WidgetHeatmap.propTypes = {
     max: PropTypes.string,
     maxZoom: PropTypes.number,
     blur: PropTypes.number,
-    radius: PropTypes.number,
-    playMode: PropTypes.bool
-  }),
-  handleToUpdate: PropTypes.func
+    radius: PropTypes.number
+  })
 };
