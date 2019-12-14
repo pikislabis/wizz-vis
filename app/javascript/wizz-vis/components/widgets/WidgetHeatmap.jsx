@@ -17,8 +17,6 @@ export default class WidgetHeatmap extends React.Component {
   constructor(props) {
     super(props);
 
-    this.timer = null;
-
     this.state = {
       aggregator: '',
       coordinate_dimension: ''
@@ -28,36 +26,6 @@ export default class WidgetHeatmap extends React.Component {
   componentDidMount() {
     this.setCoordinateDimension();
     this.setAggregator();
-
-    this.handleToUpdate();
-  }
-
-  handleToUpdate = () => {
-    if (!this.playMode) {
-      return;
-    }
-
-    let startTime, endTime;
-
-    if (this.props.originalRange) {
-      [startTime, endTime] = Time.rangeToDateTimes(this.props.originalRange);
-    } else {
-      startTime = Time.moment(this.props.originalStartTime);
-      endTime   = Time.moment(this.props.originalEndTime);
-    }
-
-    this.executePlayMode(startTime, endTime);
-  }
-
-  executePlayMode = (startTime, endTime) => {
-    this.timer = setTimeout(() => {
-      this.props.handleToUpdate(
-        startTime.toISOString(),
-        startTime.add(1, 'minute').toISOString()
-      );
-      if (startTime.isBefore(endTime))
-        this.executePlayMode(startTime, endTime);
-    }, 1000);
   }
 
   componentDidUpdate(prevProps) {
@@ -67,22 +35,6 @@ export default class WidgetHeatmap extends React.Component {
       prevProps.reloadTimestamp !== this.props.reloadTimestamp){
       this.setCoordinateDimension();
       this.setAggregator();
-    }
-
-    if(prevProps.originalRange !== this.props.originalRange ||
-      prevProps.originalStartTime !== this.props.originalStartTime ||
-      prevProps.originalEndTime !== this.props.originalEndTime ||
-      prevProps.reloadTimestamp !== this.props.reloadTimestamp) {
-      if (this.timer) {
-        clearTimeout(this.timer);
-      }
-      this.handleToUpdate();
-    }
-  }
-
-  componentWillUnmount() {
-    if(this.timer){
-        clearTimeout(this.timer);
     }
   }
 
@@ -154,11 +106,6 @@ export default class WidgetHeatmap extends React.Component {
     };
 
     return get(this.props, 'options.gradient') || gradient;
-  }
-
-  playMode() {
-    const playMode = get(this.props, 'options.playMode');
-    return playMode == undefined ? false : playMode;
   }
 
   showLegend(data_length) {

@@ -70,7 +70,8 @@ class WidgetBase extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchData();
+    if(!this.playMode())
+      this.fetchData();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -166,6 +167,11 @@ class WidgetBase extends React.Component {
     return get(this.props.options.background, property);
   }
 
+  playMode() {
+    const playMode = get(this.props, 'options.playMode.enabled');
+    return playMode == undefined ? false : playMode;
+  }
+
   render () {
     const Type = components[this.props.type || 'WidgetSerie'];
     const color = this.background('color');
@@ -204,7 +210,8 @@ class WidgetBase extends React.Component {
           }
           <ErrorBoundary>
             <Type {...this.props} {...this.state.attributes}
-              data={this.state.$$data} error={this.state.error}
+              data={this.state.$$data}
+              error={this.state.error}
               height={this.contentHeight()}
               width={this.contentWidth()}
               originalRange={this.props.range}

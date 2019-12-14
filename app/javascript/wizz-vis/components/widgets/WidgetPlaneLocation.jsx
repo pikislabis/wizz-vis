@@ -11,12 +11,17 @@ import Locatable from './../../models/locatable';
 import castArray from 'lodash/castArray';
 import sortBy from 'lodash/sortBy';
 import * as common from './../../props';
+import get from 'lodash/get';
 
 const DEFAULT_MARKER_COLOR = "#8a8acb";
 
 export default class WidgetPlaneLocation extends React.Component {
   constructor(props) {
     super(props);
+
+    this.timer = this.startTime = this.endTime = null;
+
+    this.initializeDates();
 
     this.image = {
       clientWidth: 0,
@@ -32,6 +37,8 @@ export default class WidgetPlaneLocation extends React.Component {
 
   componentDidMount() {
     this.setDimensionsAggregators();
+    if (this.playMode())
+      this.executePlayMode();
   }
 
   componentDidUpdate(prevProps) {
@@ -43,6 +50,48 @@ export default class WidgetPlaneLocation extends React.Component {
                prevProps.options.metrics !== this.props.options.metrics) {
       this.setDimensionsAggregators();
     }
+
+    if(prevProps.originalRange !== this.props.originalRange ||
+      prevProps.originalStartTime !== this.props.originalStartTime ||
+      prevProps.originalEndTime !== this.props.originalEndTime ||
+      prevProps.reloadTimestamp !== this.props.reloadTimestamp) {
+      if (this.timer) {
+        clearTimeout(this.timer);
+      }
+      this.initializeDates();
+      this.executePlayMode();
+    }
+  }
+
+  initializeDates = () => {
+    if (this.props.originalRange) {
+      [this.startTime, this.endTime] = Time.rangeToDateTimes(this.props.originalRange);
+    } else {
+      this.startTime = Time.moment(this.props.originalStartTime);
+      this.endTime   = Time.moment(this.props.originalEndTime);
+    }
+  }
+
+  playMode = () => {
+    const playMode = get(this.props, 'options.playMode.enabled');
+    return playMode == undefined ? false : playMode;
+  }
+
+  executePlayMode = () => {
+    const cadence = get(this.props, 'options.playMode.cadence') || 1000;
+    const { value, unit } = get(this.props, 'options.playMode.granularity') || { value: 1, unit: 'minute' };
+
+    this.timer = setTimeout(() => {
+      this.props.handleToUpdate(
+        this.startTime.toISOString(),
+        this.startTime.add(value, unit).toISOString()
+      );
+
+      if (this.startTime.isAfter(this.endTime))
+        this.initializeDates();
+
+      this.executePlayMode();
+    }, cadence);
   }
 
   // We have to wait until the image is loaded to retrieve the real width
