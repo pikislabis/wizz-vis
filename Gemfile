@@ -8,7 +8,7 @@ gem 'rails', '~> 5.2.2.1'
 
 gem 'pg', '~> 1.0'
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem 'puma', '>= 3.12.2'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -45,7 +45,7 @@ gem 'materialize-sass', '~> 0.100.2'
 gem 'material_icons', '~> 2.2'
 
 # Simple form
-gem 'simple_form', '~> 4.0.1'
+gem 'simple_form', '>= 5.0'
 
 # Breadcrumbs helper
 gem 'gretel', '~> 3.0'
