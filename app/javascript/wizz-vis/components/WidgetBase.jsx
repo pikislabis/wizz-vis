@@ -62,19 +62,24 @@ class WidgetBase extends React.Component {
       $$data: [],
       attributes: {},
       error: null,
-      reloadTimestamp: null
+      reloadTimestamp: null,
+      startTime: this.props.startTime,
+      endTime: this.props.endTime,
+      range: this.props.range
     };
   }
 
   componentDidMount() {
-    this.fetchData();
+    if(!this.playMode())
+      this.fetchData();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.reloadTimestamp !== prevProps.reloadTimestamp ||
-        this.props.range !== prevProps.range ||
-        this.props.startTime !== prevProps.startTime ||
-        this.props.endTime !== prevProps.endTime ||
+    const { reloadTimestamp, range } = this.props;
+    const { startTime, endTime } = this.state;
+
+    if (reloadTimestamp !== prevProps.reloadTimestamp || range !== prevProps.range ||
+        startTime !== prevState.startTime || endTime !== prevState.endTime ||
         JSON.stringify(this.props.filters) !== JSON.stringify(prevProps.filters)) {
       this.fetchData();
     }
@@ -88,9 +93,9 @@ class WidgetBase extends React.Component {
         .post('/widgets/' + this.props.id + '/data.json',
         {
           widget: {
-            range: this.props.range || '',
-            start_time: this.props.startTime || '',
-            end_time: this.props.endTime || '',
+            range: this.state.range || '',
+            start_time: this.state.startTime || '',
+            end_time: this.state.endTime || '',
             filters: this.props.filters
           }
         },
@@ -120,6 +125,10 @@ class WidgetBase extends React.Component {
           }
         })
     );
+  }
+
+  handleToUpdate = (startTime, endTime) => {
+    this.setState({ startTime, endTime });
   }
 
   /*
@@ -156,6 +165,11 @@ class WidgetBase extends React.Component {
 
   background (property) {
     return get(this.props.options.background, property);
+  }
+
+  playMode() {
+    const playMode = get(this.props, 'options.playMode.enabled');
+    return playMode == undefined ? false : playMode;
   }
 
   render () {
@@ -196,9 +210,15 @@ class WidgetBase extends React.Component {
           }
           <ErrorBoundary>
             <Type {...this.props} {...this.state.attributes}
-              data={this.state.$$data} error={this.state.error}
+              data={this.state.$$data}
+              error={this.state.error}
               height={this.contentHeight()}
-              width={this.contentWidth()} />
+              width={this.contentWidth()}
+              originalRange={this.props.range}
+              originalStartTime={this.props.startTime}
+              originalEndTime={this.props.endTime}
+              reloadTimestamp={this.props.reloadTimestamp}
+              handleToUpdate={this.handleToUpdate}/>
           </ErrorBoundary>
         </div>
       </div>
