@@ -18,6 +18,8 @@ gem 'webpacker'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 
+gem "rack", ">= 2.0.8"
+
 gem 'active_model_serializers', '~> 0.10.7'
 
 # Use CoffeeScript for .coffee assets and views
