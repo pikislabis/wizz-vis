@@ -148,6 +148,10 @@ export default class WidgetPlaneLocation extends React.Component {
     return this.props.options.image;
   }
 
+  get radius() {
+    return get(this.props, 'options.radius') || 10;
+  }
+
   tooltipPosition(node, width, height) {
     const node_x = node.attrs.x;
     const node_y = node.attrs.y;
@@ -242,7 +246,7 @@ export default class WidgetPlaneLocation extends React.Component {
                       stroke="black"
                       fill={ this.getMarkerColor(element) }
                       strokeWidth={1}
-                      radius={10}
+                      radius={ this.radius }
                       onMouseOver={(e) => this.showTooltip(e)}
                       onMouseOut={(e) => this.hideTooltip(e)}
                     />
@@ -283,7 +287,8 @@ WidgetPlaneLocation.propTypes = {
     ...common.PLANE,
     threshold_metric: PropTypes.string,
     thresholds: PropTypes.arrayOf(PropTypes.array),
-    playMode: PropTypes.object
+    playMode: PropTypes.object,
+    radius: PropTypes.number
   }),
   handleToUpdate: PropTypes.func,
   originalRange: PropTypes.string,
