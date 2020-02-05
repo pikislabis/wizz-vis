@@ -59,7 +59,7 @@ export default class WidgetPlaneLocation extends React.Component {
         clearTimeout(this.timer);
       }
       this.initializeDates();
-      this.executePlayMode();
+      this.playMode() && this.executePlayMode();
     }
   }
 
