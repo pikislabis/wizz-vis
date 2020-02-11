@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Stage, Layer, Circle, Label, Tag, Text } from 'react-konva';
 import WidgetImage from './WidgetImage';
 import Info from './utils/Info';
+import DateTimeInterval from './utils/DateTimeInterval';
 import gps_utils from './../../utils/gps';
 import Time from './../../utils/time';
 import Format from './../../utils/format';
@@ -11,6 +12,7 @@ import Locatable from './../../models/locatable';
 import castArray from 'lodash/castArray';
 import sortBy from 'lodash/sortBy';
 import * as common from './../../props';
+import cs from 'classnames';
 import get from 'lodash/get';
 
 const DEFAULT_MARKER_COLOR = "#8a8acb";
@@ -59,7 +61,7 @@ export default class WidgetPlaneLocation extends React.Component {
         clearTimeout(this.timer);
       }
       this.initializeDates();
-      this.executePlayMode();
+      this.playMode() && this.executePlayMode();
     }
   }
 
@@ -73,8 +75,16 @@ export default class WidgetPlaneLocation extends React.Component {
   }
 
   playMode = () => {
-    const playMode = get(this.props, 'options.playMode.enabled');
-    return playMode == undefined ? false : playMode;
+    const playModeEnabled = get(this.props, 'options.playMode.enabled');
+    return playModeEnabled == undefined ? false : playModeEnabled;
+  }
+
+  playModeLegendEnabled = () => {
+    return get(this.props, 'options.playMode.legend.enabled');
+  }
+
+  playModeLegendPosition = () => {
+    return get(this.props, 'options.playMode.legend.position');
   }
 
   executePlayMode = () => {
@@ -92,6 +102,11 @@ export default class WidgetPlaneLocation extends React.Component {
 
       this.executePlayMode();
     }, cadence);
+  }
+
+  endTimePlayMode = () => {
+    const { value, unit } = get(this.props, 'options.playMode.granularity') || { value: 1, unit: 'minute' };
+    return Time.moment(this.startTime).add(value, unit);
   }
 
   // We have to wait until the image is loaded to retrieve the real width
@@ -227,6 +242,10 @@ export default class WidgetPlaneLocation extends React.Component {
 
     const data = this.transformData(this.props.data);
 
+    const cssClassLegend = cs('play-mode-legend', {
+      'play-mode-legend--bottom': this.playModeLegendPosition() == 'bottom'
+    });
+
     return (
       <div style={{ position: 'relative', width: '100%', height: '100%' }}>
         <WidgetImage
@@ -273,6 +292,14 @@ export default class WidgetPlaneLocation extends React.Component {
               </Layer>
             </Stage>
         </WidgetImage>
+        {
+          this.playMode() && this.playModeLegendEnabled() ?
+            <DateTimeInterval
+              className={cssClassLegend}
+              start_time={this.startTime.toISOString()}
+              end_time={this.endTimePlayMode().toISOString()}
+            /> : null
+        }
       </div>
     )
   }
