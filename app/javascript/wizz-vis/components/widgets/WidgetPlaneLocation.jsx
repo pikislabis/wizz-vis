@@ -91,13 +91,15 @@ export default class WidgetPlaneLocation extends React.Component {
     const cadence = get(this.props, 'options.playMode.cadence') || 1000;
     const { value, unit } = get(this.props, 'options.playMode.granularity') || { value: 1, unit: 'minute' };
 
-    this.timer = setTimeout(() => {
-      this.props.handleToUpdate(
-        this.startTime.toISOString(),
-        this.startTime.add(value, unit).toISOString()
-      );
+    this.props.handleToUpdate(
+      this.startTime.toISOString(),
+      Time.moment(this.startTime).add(value, unit).toISOString()
+    );
 
-      if (this.startTime.isAfter(this.endTime))
+    this.timer = setTimeout(() => {
+      this.startTime.add(value, unit).toISOString();
+
+      if (this.startTime.isSameOrAfter(this.endTime))
         this.initializeDates();
 
       this.executePlayMode();
