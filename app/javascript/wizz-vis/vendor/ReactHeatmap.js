@@ -9,7 +9,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import Heatmap from 'heatmapjs/build/heatmap.js';
+import Heatmap from './heatmapjs/build/heatmap.js';
 
 class ReactHeatmap extends Component {
 

@@ -5,6 +5,11 @@ import ImageLink from './../ImageLink';
 import get from 'lodash/get';
 
 export default class WidgetImage extends React.Component {
+  componentDidUpdate() {
+    if (this.props.scaleOffset)
+      setTimeout(this.props.onLoad, 50);
+  }
+
   get keepRatio() {
     return this.props.keepRatio || get(this.props, 'options.keep_ratio');
   }
@@ -21,10 +26,21 @@ export default class WidgetImage extends React.Component {
     return this.props.onLoad;
   }
 
+  get scalePercent() {
+    return (100 * this.props.scale).toString().concat('%');
+  }
+
+  offset(type) {
+    return this.props.translation[type].toString().concat('px');
+  }
+
   render() {
     let style = { position: 'absolute', top: 0, left: 0 };
 
-    if (this.keepRatio) {
+    if (this.props.scale) {
+      style = {...style, width: this.scalePercent, height: this.scalePercent,
+               top: this.offset('y'), left: this.offset('x')};
+    } else if (this.keepRatio) {
       style = {...style, top: '50%', left: '50%',
                transform: 'translate(-50%, -50%)',
                maxWidth: '100%', maxHeight: '100%',
@@ -66,6 +82,10 @@ WidgetImage.propTypes = {
     image: PropTypes.string,
     keep_ratio: PropTypes.bool,
     opacity: PropTypes.string,
-    imageLink: PropTypes.object
+    imageLink: PropTypes.object,
+    translation: PropTypes.object,
+    scale: PropTypes.number,
+    scaleOffset: PropTypes.bool,
+    onLoad: PropTypes.function
   })
 };

@@ -8,12 +8,14 @@ import DateTimeInterval from './utils/DateTimeInterval';
 import gps_utils from './../../utils/gps';
 import Time from './../../utils/time';
 import Format from './../../utils/format';
+import StorageCtrl from './../../utils/storage';
 import Locatable from './../../models/locatable';
 import castArray from 'lodash/castArray';
 import sortBy from 'lodash/sortBy';
 import * as common from './../../props';
 import cs from 'classnames';
 import get from 'lodash/get';
+import { MapInteraction } from 'react-map-interaction';
 
 const DEFAULT_MARKER_COLOR = "#8a8acb";
 
@@ -35,6 +37,9 @@ export default class WidgetPlaneLocation extends React.Component {
     this.coordinate_field = '';
     this.aggregators = [];
     this.grouped_dimensions = [];
+
+    this.scaleOffset = 0;
+    this.state = this.planeTransform;
   }
 
   componentDidMount() {
@@ -169,6 +174,17 @@ export default class WidgetPlaneLocation extends React.Component {
     return get(this.props, 'options.radius') || 10;
   }
 
+  get planeTransform() {
+    return StorageCtrl.loadDetails('planeTransform', this.props.id) ||
+      { scale: 1, translation: { x: 0, y:0 } }
+  }
+
+  changeZoom(obj) {
+    this.scaleOffset = obj.scale - this.state.scale;
+    StorageCtrl.persistDetails('planeTransform', this.props.id, obj);
+    this.setState(obj);
+  }
+
   tooltipPosition(node, width, height) {
     const node_x = node.attrs.x;
     const node_y = node.attrs.y;
@@ -248,52 +264,76 @@ export default class WidgetPlaneLocation extends React.Component {
       'play-mode-legend--bottom': this.playModeLegendPosition() == 'bottom'
     });
 
-    return (
-      <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-        <WidgetImage
+    const content = <WidgetImage
+      width={this.image.clientWidth}
+      height={this.image.clientHeight}
+      keepRatio={this.keepRatio}
+      image={this.imageURL}
+      scale={this.state.scale}
+      scaleOffset={this.scaleOffset !== 0}
+      translation={this.state.translation}
+      onLoad={this.handleImageLoaded.bind(this)}
+      ref={(node) => {
+        if (node) {
+          this.image = node.image;
+          this.scaleOffset = 0;
+        } else {
+          null
+        }}}>
+        <Stage
           width={this.image.clientWidth}
-          height={this.image.clientHeight}
-          keepRatio={this.keepRatio}
-          image={this.imageURL}
-          onLoad={this.handleImageLoaded.bind(this)}
-          ref={(node) => node ? this.image = node.image : null}>
-            <Stage width={this.image.clientWidth} height={this.image.clientHeight}>
-              <Layer ref="layer">
-                {
-                  data.map((element, index) => (
-                    <Circle
-                      key={index}
-                      {...element}
-                      stroke="black"
-                      fill={ this.getMarkerColor(element) }
-                      strokeWidth={1}
-                      radius={ this.radius }
-                      onMouseOver={(e) => this.showTooltip(e)}
-                      onMouseOut={(e) => this.hideTooltip(e)}
-                    />
-                  ))
-                }
-                <Label visible={false} ref="tooltip">
-                  <Tag
-                    fill="white"
-                    pointerDirection="down"
-                    pointerWidth={10}
-                    pointerHeight={10}
-                    cornerRadius={5}
-                    shadowColor="black"
-                    shadowBlur={10}
-                    shadowOffset={10}
-                    shadowOpacity={0.5}
-                  />
-                  <Text
-                    text=""
-                    padding={5}
-                    fill="black"
-                  />
-                </Label>
-              </Layer>
-            </Stage>
-        </WidgetImage>
+          height={this.image.clientHeight}>
+          <Layer ref="layer">
+            {
+              data.map((element, index) => (
+                <Circle
+                  key={index}
+                  {...element}
+                  stroke="black"
+                  fill={ this.getMarkerColor(element) }
+                  strokeWidth={1}
+                  radius={ this.radius }
+                  onMouseOver={(e) => this.showTooltip(e)}
+                  onMouseOut={(e) => this.hideTooltip(e)}
+                />
+              ))
+            }
+            <Label visible={false} ref="tooltip">
+              <Tag
+                fill="white"
+                pointerDirection="down"
+                pointerWidth={10}
+                pointerHeight={10}
+                cornerRadius={5}
+                shadowColor="black"
+                shadowBlur={10}
+                shadowOffset={10}
+                shadowOpacity={0.5}
+              />
+              <Text
+                text=""
+                padding={5}
+                fill="black"
+              />
+            </Label>
+          </Layer>
+        </Stage>
+    </WidgetImage>
+
+    return (
+      <div style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
+        <MapInteraction
+          scale={this.state.scale}
+          defaultScale={1}
+          minScale={0.75}
+          maxScale={5}
+          translation={this.state.translation}
+          defaultTranslation={this.state.translation}
+          onChange={(e) => this.changeZoom(e)}
+          showControls
+        >{
+          ({ translation, scale }) => content
+        }</MapInteraction>
         {
           this.playMode() && this.playModeLegendEnabled() ?
             <DateTimeInterval
@@ -302,7 +342,7 @@ export default class WidgetPlaneLocation extends React.Component {
               end_time={this.endTimePlayMode().toISOString()}
             /> : null
         }
-      </div>
+      </div>
     )
   }
 };
