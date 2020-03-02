@@ -325,7 +325,7 @@ export default class WidgetPlaneLocation extends React.Component {
         <MapInteraction
           scale={this.state.scale}
           defaultScale={1}
-          minScale={0.75}
+          minScale={0.25}
           maxScale={5}
           translation={this.state.translation}
           defaultTranslation={this.state.translation}

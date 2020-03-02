@@ -26,8 +26,23 @@ export default class WidgetImage extends React.Component {
     return this.props.onLoad;
   }
 
+  get imageProportions() {
+    let value = { width: this.scalePercent, height: this.scalePercent };
+    if (this.image && this.keepRatio) {
+      value = {
+        height: this.scaleRatio(this.image.naturalHeight),
+        width: this.scaleRatio(this.image.naturalWidth)
+      }
+    }
+    return value;
+  }
+
   get scalePercent() {
     return (100 * this.props.scale).toString().concat('%');
+  }
+
+  scaleRatio(ratio) {
+    return (ratio * this.props.scale).toString().concat('px');
   }
 
   offset(type) {
@@ -38,7 +53,7 @@ export default class WidgetImage extends React.Component {
     let style = { position: 'absolute', top: 0, left: 0 };
 
     if (this.props.scale) {
-      style = {...style, width: this.scalePercent, height: this.scalePercent,
+      style = {...style, ...this.imageProportions,
                top: this.offset('y'), left: this.offset('x')};
     } else if (this.keepRatio) {
       style = {...style, top: '50%', left: '50%',
