@@ -78,8 +78,13 @@ class WidgetBase extends React.Component {
     const { reloadTimestamp, range } = this.props;
     const { startTime, endTime } = this.state;
 
-    if (reloadTimestamp !== prevProps.reloadTimestamp || range !== prevProps.range ||
-        startTime !== prevState.startTime || endTime !== prevState.endTime ||
+    if(!this.playMode())
+      this.updateTimeFromProps();
+
+    if (reloadTimestamp !== prevProps.reloadTimestamp ||
+        range !== prevProps.range ||
+        startTime !== prevState.startTime ||
+        endTime !== prevState.endTime ||
         JSON.stringify(this.props.filters) !== JSON.stringify(prevProps.filters)) {
       this.fetchData();
     }
@@ -93,7 +98,7 @@ class WidgetBase extends React.Component {
         .post('/widgets/' + this.props.id + '/data.json',
         {
           widget: {
-            range: this.state.range || '',
+            range: this.props.range || '',
             start_time: this.state.startTime || '',
             end_time: this.state.endTime || '',
             filters: this.props.filters
@@ -170,6 +175,16 @@ class WidgetBase extends React.Component {
   playMode() {
     const playMode = get(this.props, 'options.playMode.enabled');
     return playMode == undefined ? false : playMode;
+  }
+
+  updateTimeFromProps() {
+    const { startTime, endTime } = this.state;
+
+    if(!this.props.starTime || !this.props.endTime)
+      return;
+
+    if (this.props.startTime !== startTime || this.props.endTime !== endTime)
+      this.setState({ startTime: this.props.startTime, endTime: this.props.endTime });
   }
 
   render () {
